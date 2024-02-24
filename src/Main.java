@@ -39,6 +39,7 @@ public class Main extends JFrame {
 
         registerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                setSize(800, 500);
                 cardLayout.show(cardPanel, "Register");
             }
         });
