@@ -1,5 +1,7 @@
 package view;
 
+import error.NotSelectedOption;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,6 +19,39 @@ public class RegisterView extends JPanel {
     private JPanel eastInvestorPanel;
     private CardLayout eastCards;
     private JPanel eastPanel;
+    private JPanel southPanel;
+    private JPanel southPanelButtons;
+    private RetourALaPagePrincipale retourALaPagePrincipaleListener;
+    private JButton btnRetour;
+    private JButton btnEnregistrer;
+    private JLabel title;
+    private JComboBox<String> userTypeJCB;
+    private JTextField nomComplet;
+    private JTextField email;
+    private JTextField mdp;
+    private JTextField confirmationMdp;
+    private JTextField telephone;
+    private JComboBox<Integer> dayComboBox;
+    private JComboBox<String> monthComboBox;
+    private JComboBox<Integer> yearComboBox;
+    private ButtonGroup buttonGroupMarital;
+    private JTextArea detailEmploiTA;
+    private JTextField revenuAnnuel;
+    private JTextField noteCredit;
+    private JTextField dureeCanada;
+    private ButtonGroup buttonGroupRisque;
+    private ButtonGroup buttonGroupEducation;
+    private JTextArea detailBancaireTA;
+    private JTextField nomBanque;
+    private JLabel registeredMessage;
+    private JRadioButton optionCelibataire;
+    private JRadioButton optionMarie;
+    private JRadioButton optionPeuRisque;
+    private JRadioButton optionRisque;
+    private JRadioButton optionTresRisque;
+    private JRadioButton optionPeu;
+    private JRadioButton optionMoyen;
+    private JRadioButton optionBeaucoup;
     public RegisterView() {
         //Declaration des Panels parents pour organiser les composants
         mainPanel = new JPanel();
@@ -26,6 +61,9 @@ public class RegisterView extends JPanel {
         eastInvestorPanel = new JPanel();
         eastCards = new CardLayout();
         eastPanel = new JPanel(eastCards);
+        southPanel = new JPanel();
+        southPanelButtons = new JPanel();
+
 
         //Initialisation des LayoutManager pour chaque panel
         mainPanel.setLayout(new BorderLayout());
@@ -33,31 +71,40 @@ public class RegisterView extends JPanel {
         eastClientPanel.setLayout(new BoxLayout(eastClientPanel, BoxLayout.Y_AXIS));
         eastInvestorPanel.setLayout(new BoxLayout(eastInvestorPanel, BoxLayout.Y_AXIS));
         westUserPanel.setLayout(new BoxLayout(westUserPanel, BoxLayout.Y_AXIS));
+        southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.Y_AXIS));
+        southPanelButtons.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         //Adding empty JPanel for the cards as the empty JComboOption
         eastPanel.add(new JPanel(), "Empty");
 
         // Ajout des composants de northPanel
-        northPanel.add(new JLabel("Page d'Inscription"));
-        JComboBox<String> userTypeJCB = new JComboBox<String>(new String[]{"", "Client", "Investisseur"});
+        title = new JLabel("Page d'Inscription");
+        title.setAlignmentX(CENTER_ALIGNMENT);
+        northPanel.add(title);
+        userTypeJCB = new JComboBox<String>(new String[]{"", "Client", "Investisseur"});
         northPanel.add(userTypeJCB);
         mainPanel.add(northPanel, BorderLayout.NORTH); // Ajout de northPanel au mainPanel
 
         //Ajout des composants dans leur Panel Row
+        nomComplet = new JTextField(15);
+        email = new JTextField(15);
+        mdp = new JTextField(15);
+        confirmationMdp = new JTextField(15);
+        telephone = new JTextField(15);
         List<JPanel> userRows = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             userRows.add(new JPanel(new FlowLayout(FlowLayout.LEFT)));
         }
-        userRows.get(0).add(new JLabel("<html><body style='width: 80px'>Nom Complet :</body></html>"));
-        userRows.get(0).add(new JTextField(15));
-        userRows.get(1).add(new JLabel("<html><body style='width: 80px'>Email :</body></html>"));
-        userRows.get(1).add(new JTextField(15));
-        userRows.get(2).add(new JLabel("<html><body style='width: 80px'>Mot de Passe :</body></html>"));
-        userRows.get(2).add(new JTextField(15));
-        userRows.get(3).add(new JLabel("<html><body style='width: 80px'>Confirmation du Mot de Passe :</body></html>"));
-        userRows.get(3).add(new JTextField(15));
-        userRows.get(4).add(new JLabel("<html><body style='width: 80px'>Telephone :</body></html>"));
-        userRows.get(4).add(new JTextField(15));
+        userRows.get(0).add(new JLabel("<html><body style='width: 100px'>Nom Complet :</body></html>"));
+        userRows.get(0).add(nomComplet);
+        userRows.get(1).add(new JLabel("<html><body style='width: 100px'>Email :</body></html>"));
+        userRows.get(1).add(email);
+        userRows.get(2).add(new JLabel("<html><body style='width: 100px'>Mot de Passe :</body></html>"));
+        userRows.get(2).add(mdp);
+        userRows.get(3).add(new JLabel("<html><body style='width: 100px'>Confirmation du Mot de Passe :</body></html>"));
+        userRows.get(3).add(confirmationMdp);
+        userRows.get(4).add(new JLabel("<html><body style='width: 100px'>Telephone :</body></html>"));
+        userRows.get(4).add(telephone);
 
         for(JPanel userRow : userRows){
             westUserPanel.add(userRow);
@@ -68,9 +115,9 @@ public class RegisterView extends JPanel {
         //Creation de JComboBox pour entrer une date de naissance
         JPanel dateNaissancePanel = new JPanel();
         dateNaissancePanel.setLayout(new FlowLayout());
-        JComboBox<Integer> dayComboBox = new JComboBox<>();
-        JComboBox<String> monthComboBox = new JComboBox<>();
-        JComboBox<Integer> yearComboBox = new JComboBox<>();
+        dayComboBox = new JComboBox<>();
+        monthComboBox = new JComboBox<>();
+        yearComboBox = new JComboBox<>();
 
         for (int i = 1; i <= 31; i++) {
             dayComboBox.addItem(i);
@@ -80,7 +127,8 @@ public class RegisterView extends JPanel {
             yearComboBox.addItem(i);
         }
 
-        String[] months = new String[]{"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+        String[] months = new String[]{"Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+                "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"};
         for (String month : months) {
             monthComboBox.addItem(month);
         }
@@ -93,10 +141,10 @@ public class RegisterView extends JPanel {
         JPanel statutMaritalPanel = new JPanel();
         statutMaritalPanel.setLayout(new FlowLayout());
 
-        JRadioButton optionCelibataire = new JRadioButton("Célibataire");
-        JRadioButton optionMarie = new JRadioButton("Marié");
+        optionCelibataire = new JRadioButton("Célibataire");
+        optionMarie = new JRadioButton("Marié");
 
-        ButtonGroup buttonGroupMarital = new ButtonGroup();
+        buttonGroupMarital = new ButtonGroup();
         buttonGroupMarital.add(optionCelibataire);
         buttonGroupMarital.add(optionMarie);
 
@@ -105,25 +153,31 @@ public class RegisterView extends JPanel {
 
         //Ajout des composants de eastClientPanel
 
+        detailEmploiTA = new JTextArea(2,15);
+        detailEmploiTA.setLineWrap(true);
+        detailEmploiTA.setWrapStyleWord(true);
+        revenuAnnuel = new JTextField(15);
+        noteCredit = new JTextField(15);
+        dureeCanada = new JTextField(15);
         List<JPanel> clientRows = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
             clientRows.add(new JPanel(new FlowLayout(FlowLayout.LEFT)));
         }
-        clientRows.get(0).add(new JLabel("<html><body style='width: 150px'>Informations sur votre emploi :"));
-        JTextArea detailEmploiTA = new JTextArea(2,15);
+        clientRows.get(0).add(new JLabel("<html><body style='width: 100px'>Informations sur votre emploi :"));
+        detailEmploiTA = new JTextArea(2,15);
         detailEmploiTA.setLineWrap(true);
         detailEmploiTA.setWrapStyleWord(true);
         clientRows.get(0).add(detailEmploiTA);
-        clientRows.get(1).add(new JLabel("<html><body style='width: 150px'>Revenu Annuel :"));
-        clientRows.get(1).add(new JTextField(15));
-        clientRows.get(2).add(new JLabel("<html><body style='width: 150px'>Note de Crédit :"));
-        clientRows.get(2).add(new JTextField(15));
-        clientRows.get(3).add(new JLabel("<html><body style='width: 150px'>Date de naissance :"));
+        clientRows.get(1).add(new JLabel("<html><body style='width: 100px'>Revenu Annuel :"));
+        clientRows.get(1).add(revenuAnnuel);
+        clientRows.get(2).add(new JLabel("<html><body style='width: 100px'>Note de Crédit :"));
+        clientRows.get(2).add(noteCredit);
+        clientRows.get(3).add(new JLabel("<html><body style='width: 100px'>Date de naissance :"));
         clientRows.get(3).add(dateNaissancePanel);
-        clientRows.get(4).add(new JLabel("<html><body style='width: 150px'>Statut marital :"));
+        clientRows.get(4).add(new JLabel("<html><body style='width: 100px'>Statut marital :"));
         clientRows.get(4).add(statutMaritalPanel);
-        clientRows.get(5).add(new JLabel("<html><body style='width: 150px'>Établi au Canada depuis combien d'année :"));
-        clientRows.get(5).add(new JTextField(15));
+        clientRows.get(5).add(new JLabel("<html><body style='width: 100px'>Établi au Canada depuis combien d'année :"));
+        clientRows.get(5).add(dureeCanada);
 
         for(JPanel clientRow : clientRows){
             eastClientPanel.add(clientRow);
@@ -134,11 +188,11 @@ public class RegisterView extends JPanel {
         JPanel niveauRisquePanel = new JPanel();
         niveauRisquePanel.setLayout(new FlowLayout());
 
-        JRadioButton optionPeuRisque = new JRadioButton("Peu de risque");
-        JRadioButton optionRisque = new JRadioButton("Risqué");
-        JRadioButton optionTresRisque = new JRadioButton("Très risqué");
+        optionPeuRisque = new JRadioButton("Peu de risque");
+        optionRisque = new JRadioButton("Risqué");
+        optionTresRisque = new JRadioButton("Très risqué");
 
-        ButtonGroup buttonGroupRisque = new ButtonGroup();
+        buttonGroupRisque = new ButtonGroup();
         buttonGroupRisque.add(optionPeuRisque);
         buttonGroupRisque.add(optionRisque);
         buttonGroupRisque.add(optionTresRisque);
@@ -151,14 +205,14 @@ public class RegisterView extends JPanel {
         JPanel niveauEducPanel = new JPanel();
         niveauEducPanel.setLayout(new FlowLayout());
 
-        JRadioButton optionPeu = new JRadioButton("Peu");
-        JRadioButton optionMoyen = new JRadioButton("Moyen");
-        JRadioButton optionBeaucoup = new JRadioButton("Beaucoup");
+        optionPeu = new JRadioButton("Peu");
+        optionMoyen = new JRadioButton("Moyen");
+        optionBeaucoup = new JRadioButton("Beaucoup");
 
-        ButtonGroup buttonGroupEducation = new ButtonGroup();
-        buttonGroupRisque.add(optionPeu);
-        buttonGroupRisque.add(optionMoyen);
-        buttonGroupRisque.add(optionBeaucoup);
+        buttonGroupEducation = new ButtonGroup();
+        buttonGroupEducation.add(optionPeu);
+        buttonGroupEducation.add(optionMoyen);
+        buttonGroupEducation.add(optionBeaucoup);
 
         niveauEducPanel.add(optionPeu);
         niveauEducPanel.add(optionMoyen);
@@ -167,16 +221,17 @@ public class RegisterView extends JPanel {
 
         //Ajout des composants de westInvestorPanel
 
+        detailBancaireTA = new JTextArea(2,15);
+        detailBancaireTA.setLineWrap(true);
+        detailBancaireTA.setWrapStyleWord(true);
+        nomBanque = new JTextField(15);
         List<JPanel> investorRows = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             investorRows.add(new JPanel(new FlowLayout(FlowLayout.LEFT)));
         }
         investorRows.get(0).add(new JLabel("<html><body style='width: 100px'>Nom de votre banque :"));
-        investorRows.get(0).add(new JTextField(15));
+        investorRows.get(0).add(nomBanque);
         investorRows.get(1).add(new JLabel("<html><body style='width: 100px'>Détails bancaires :"));
-        JTextArea detailBancaireTA = new JTextArea(2,15);
-        detailBancaireTA.setLineWrap(true);
-        detailBancaireTA.setWrapStyleWord(true);
         investorRows.get(1).add(detailBancaireTA);
         investorRows.get(2).add(new JLabel("<html><body style='width: 100px'>Niveau de risque souhaité :"));
         investorRows.get(2).add(niveauRisquePanel);
@@ -187,12 +242,34 @@ public class RegisterView extends JPanel {
             eastInvestorPanel.add(investortRow);
         }
         eastPanel.add(eastInvestorPanel, "Investor");
-
-
         mainPanel.add(eastPanel, BorderLayout.EAST);
+
+        //Initialisation des messages d'erreur ou de complétion du compte
+        registeredMessage = new JLabel();
+        registeredMessage.setAlignmentX(CENTER_ALIGNMENT);
+        southPanel.add(registeredMessage);
+
+        //Initialisation de bouton retour a la page d'acceuil et enregistrer
+        btnRetour = new JButton("Retour à la page d'acceuil");
+        btnEnregistrer = new JButton("Créer un compte");
+
+        southPanelButtons.add(btnRetour);
+        southPanelButtons.add(btnEnregistrer);
+
+        southPanel.add(southPanelButtons);
+
+        mainPanel.add(southPanel, BorderLayout.SOUTH);
+
         add(mainPanel);
 
-
+        //All ActionListener
+        btnRetour.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (retourALaPagePrincipaleListener != null) {
+                    retourALaPagePrincipaleListener.retournerAlaPagePrincipale(); // Notify listener
+                }
+            }
+        });
         userTypeJCB.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 userSelected = userTypeJCB.getSelectedItem().toString();
@@ -206,4 +283,125 @@ public class RegisterView extends JPanel {
         });
 
     }
+    public interface RetourALaPagePrincipale {
+        void retournerAlaPagePrincipale();
+    }
+    public void ajoutDuListener(RetourALaPagePrincipale listener) {
+        this.retourALaPagePrincipaleListener = listener;
+    }
+    public void addEnregistrerListener(ActionListener listener){
+        btnEnregistrer.addActionListener(listener);
+    }
+    private List<String> getUserInfo(){
+        List<String> userInfos = new ArrayList<>();
+        userInfos.add(nomComplet.getText());
+        userInfos.add(email.getText());
+        userInfos.add(mdp.getText());
+        userInfos.add(confirmationMdp.getText());
+        userInfos.add(telephone.getText());
+        return userInfos;
+    }
+    public List<String> getClientInfo() throws NotSelectedOption {
+        JRadioButton jrbSelected;
+        int month = 0;
+        switch (monthComboBox.getSelectedItem().toString()){
+            case "Janvier":
+                month = 1;
+                break;
+            case "Février":
+                month = 2;
+                break;
+            case "Mars":
+                month = 3;
+                break;
+            case "Avril":
+                month = 4;
+                break;
+            case "Mai":
+                month = 5;
+                break;
+            case "Juin":
+                month = 6;
+                break;
+            case "Juillet":
+                month = 7;
+                break;
+            case "Août":
+                month = 8;
+                break;
+            case "Septembre":
+                month = 9;
+                break;
+            case "Octobre":
+                month = 10;
+                break;
+            case "Novembre":
+                month = 11;
+                break;
+            case "Décembre":
+                month = 12;
+                break;
+        }
+        List<String> clientInfos = new ArrayList<>(getUserInfo());
+        clientInfos.add(detailEmploiTA.getText());
+        clientInfos.add(revenuAnnuel.getText());
+        clientInfos.add(noteCredit.getText());
+        clientInfos.add(String.valueOf(LocalDate.of(
+                (Integer) yearComboBox.getSelectedItem(),
+                month,
+                (Integer) dayComboBox.getSelectedItem())));
+
+        if (optionCelibataire.isSelected())
+            jrbSelected = optionCelibataire;
+        else if (optionMarie.isSelected())
+            jrbSelected = optionMarie;
+        else
+            throw new NotSelectedOption("Veuillez Choisir un statut marital");
+        clientInfos.add(jrbSelected.getText());
+        clientInfos.add(dureeCanada.getText());
+        return clientInfos;
+    }
+
+    public List<String> getInvestorInfo() throws NotSelectedOption {
+        JRadioButton jrbSelected;
+        List<String> investorInfos = new ArrayList<>(getUserInfo());
+        investorInfos.add(nomBanque.getText());
+        investorInfos.add(detailBancaireTA.getText());
+
+        if (optionPeuRisque.isSelected())
+            jrbSelected = optionPeuRisque;
+        else if(optionRisque.isSelected())
+            jrbSelected = optionRisque;
+        else if(optionTresRisque.isSelected())
+            jrbSelected = optionTresRisque;
+        else
+            throw new NotSelectedOption("Veuillez Choisir un niveau de risque");
+
+        investorInfos.add(jrbSelected.getText());
+
+        if (optionPeu.isSelected())
+            jrbSelected = optionPeu;
+        else if(optionMoyen.isSelected())
+            jrbSelected = optionMoyen;
+        else if(optionBeaucoup.isSelected())
+            jrbSelected = optionBeaucoup;
+        else
+            throw new NotSelectedOption("Veuillez Choisir un niveau d'éducation financier");
+        investorInfos.add(jrbSelected.getText());
+        return investorInfos;
+    }
+    public String getUserType(){
+        userSelected = userTypeJCB.getSelectedItem().toString();
+        if (userSelected.equals("Client"))
+            return "Client";
+        else if(userSelected.equals("Investisseur"))
+            return "Investisseur";
+        else
+            return "";
+    }
+
+    public void setMessage(String message){
+        registeredMessage.setText(message);
+    }
+
 }

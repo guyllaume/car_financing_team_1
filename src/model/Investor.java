@@ -6,22 +6,26 @@ public class Investor extends User{
     private String detailBancaire;
     private String risque;
     private String education;
-    public Investor(String nomComplet, String email, String password, String numeroTelephone, String nomBanque,
+
+    public Investor(){
+        super();
+    }
+    /*public Investor(String nomComplet, String email, String password, String numeroTelephone, String nomBanque,
                     String detailBancaire, String risque, String education){
         super(nomComplet, email, password, numeroTelephone);
         this.nomBanque = nomBanque;
         this.detailBancaire = detailBancaire;
         this.risque = risque;
         this.education = education;
-    }
+    }*/
 
     @Override
     public String toString(){
         String info = super.toString();
-        info += "Nom de Votre Banque : " + nomBanque
-                + "Vos détails bancaire : " + detailBancaire
-                + "Votre niveau de risque : " + risque
-                + "Votre niveau d'éducation comme investisseur : " + education;
+        info += "<br>Nom de Votre Banque : " + nomBanque
+                + "<br>Vos détails bancaire : " + detailBancaire
+                + "<br>Votre niveau de risque : " + risque
+                + "<br>Votre niveau d'éducation comme investisseur : " + education;
         return info;
     }
 

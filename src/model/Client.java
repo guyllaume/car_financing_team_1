@@ -9,9 +9,12 @@ public class Client extends User{
     private int credit;
     private LocalDate dateNaissance;
     private String statutMarital;
-    private LocalDate dateCanada;
-    public Client(String nomComplet, String email, String password, String numeroTelephone, String infoEmploi,
-                  double revenuAnnuel, int credit, LocalDate dateNaissance, String statutMarital, LocalDate dateCanada){
+    private int dateCanada;
+    public Client(){
+        super();
+    }
+    /*public Client(String nomComplet, String email, String password, String numeroTelephone, String infoEmploi,
+                  double revenuAnnuel, int credit, LocalDate dateNaissance, String statutMarital, int dateCanada){
         super(nomComplet, email, password, numeroTelephone);
         this.infoEmploi = infoEmploi;
         this.revenuAnnuel = revenuAnnuel;
@@ -19,15 +22,15 @@ public class Client extends User{
         this.dateNaissance = dateNaissance;
         this.statutMarital = statutMarital;
         this.dateCanada = dateCanada;
-    }
+    }*/
     @Override
     public String toString(){
         String info = super.toString();
-        info += "Vos informations d'emploi : " + infoEmploi
-                + "Votre revenue annuel : " + revenuAnnuel
-                + "Votre cote de credit : " + credit
-                + "Votre statut marital : " + statutMarital
-                + "Votre cote de credit : " + dateCanada;
+        info += "<br>Vos informations d'emploi : " + infoEmploi
+                + "<br>Votre revenue annuel : " + revenuAnnuel
+                + "<br>Votre cote de credit : " + credit
+                + "<br>Votre statut marital : " + statutMarital
+                + "<br>Votre cote de credit : " + dateCanada;
         return info;
     }
     public String getInfoEmploi() {
@@ -62,11 +65,11 @@ public class Client extends User{
         this.statutMarital = statutMarital;
     }
 
-    public LocalDate getDateCanada() {
+    public int getDateCanada() {
         return dateCanada;
     }
 
-    public void setDateCanada(LocalDate dateCanada) {
+    public void setDateCanada(int dateCanada) {
         this.dateCanada = dateCanada;
     }
 

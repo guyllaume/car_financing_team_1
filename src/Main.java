@@ -1,3 +1,7 @@
+import controller.ClientRegisterController;
+import controller.InvestorRegisterController;
+import model.Client;
+import model.Investor;
 import view.LoginView;
 import view.RegisterView;
 
@@ -6,12 +10,16 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Main extends JFrame {
+public class Main extends JFrame implements RegisterView.RetourALaPagePrincipale {
     private CardLayout cardLayout = new CardLayout();
     private JPanel cardPanel = new JPanel(cardLayout);
     private JPanel mainPanel = new JPanel(new FlowLayout());
     private LoginView loginView = new LoginView();
     private RegisterView registerView = new RegisterView();
+    private Client client = new Client();
+    private Investor investor = new Investor();
+    private ClientRegisterController crController;
+    private InvestorRegisterController irController;
 
     public Main() {
         setTitle("Financement Automobile XYZ");
@@ -31,6 +39,10 @@ public class Main extends JFrame {
 
         add(cardPanel);
 
+        registerView.addEnregistrerListener(e ->{
+            pack();
+            setSize(800, getHeight());
+        });
         loginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(cardPanel, "Login");
@@ -39,10 +51,14 @@ public class Main extends JFrame {
 
         registerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                setSize(800, 500);
+                setSize(800, 400);
                 cardLayout.show(cardPanel, "Register");
             }
         });
+
+        irController = new InvestorRegisterController(investor, registerView);
+        crController = new ClientRegisterController(client, registerView);
+        registerView.ajoutDuListener(this);
     }
 
     public static void main(String[] args) {
@@ -53,5 +69,11 @@ public class Main extends JFrame {
                 frame.setVisible(true);
             }
         });
+    }
+
+    @Override
+    public void retournerAlaPagePrincipale() {
+        setSize(600, 400);
+        cardLayout.show(cardPanel, "Main");
     }
 }

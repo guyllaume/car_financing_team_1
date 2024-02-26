@@ -6,19 +6,20 @@ public class User {
     private String password;
     private String telephone;
 
-    public User(String nomComplet, String email, String password, String telephone){
+    public User(){}
+    /*public User(String nomComplet, String email, String password, String telephone){
         this.nomComplet = nomComplet;
         this.email = email;
         this.password = password;
         this.telephone = telephone;
-    }
+    }*/
 
     @Override
     public String toString(){
-        String info = "Nom complet : " + this.nomComplet
-                + "Votre Courriel : " + this.email
-                + "Votre Mot De Passe : " + this.password
-                + "Votre numero de telephone : " + this.telephone;
+        String info = "<br>Nom complet : " + this.nomComplet
+                + "<br>Votre Courriel : " + this.email
+                + "<br>Votre Mot De Passe : " + this.password
+                + "<br>Votre numero de telephone : " + this.telephone;
         return info;
     }
     public String getEmail() {
