@@ -3,6 +3,8 @@ package view;
 import error.NotSelectedOption;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RegisterView extends JPanel {
+public class RegisterView extends PictureView {
     private String userSelected;
     private JPanel mainPanel;
     private JPanel northPanel;
@@ -52,7 +54,11 @@ public class RegisterView extends JPanel {
     private JRadioButton optionPeu;
     private JRadioButton optionMoyen;
     private JRadioButton optionBeaucoup;
+    private JPanel niveauRisquePanel;
+    private JPanel niveauEducPanel;
+    private JPanel statutMaritalPanel;
     public RegisterView() {
+        super("src/view/Voiture.jpg");
         //Declaration des Panels parents pour organiser les composants
         mainPanel = new JPanel();
         northPanel = new JPanel();
@@ -87,10 +93,25 @@ public class RegisterView extends JPanel {
 
         //Ajout des composants dans leur Panel Row
         nomComplet = new JTextField(15);
+        nomComplet.setBorder(null);
+        nomComplet.setPreferredSize(new Dimension(0,22));
+        nomComplet.setBackground(new Color(238, 238, 238));
         email = new JTextField(15);
+        email.setBorder(null);
+        email.setPreferredSize(new Dimension(0,22));
+        email.setBackground(new Color(238, 238, 238));
         mdp = new JTextField(15);
+        mdp.setBorder(null);
+        mdp.setPreferredSize(new Dimension(0,22));
+        mdp.setBackground(new Color(238, 238, 238));
         confirmationMdp = new JTextField(15);
+        confirmationMdp.setBorder(null);
+        confirmationMdp.setPreferredSize(new Dimension(0,22));
+        confirmationMdp.setBackground(new Color(238, 238, 238));
         telephone = new JTextField(15);
+        telephone.setPreferredSize(new Dimension(0,22));
+        telephone.setBorder(null);
+        telephone.setBackground(new Color(238, 238, 238));
         List<JPanel> userRows = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             userRows.add(new JPanel(new FlowLayout(FlowLayout.LEFT)));
@@ -138,7 +159,7 @@ public class RegisterView extends JPanel {
         dateNaissancePanel.add(yearComboBox);
 
         //Creation des JRadioButtons pour le statut marital
-        JPanel statutMaritalPanel = new JPanel();
+        statutMaritalPanel = new JPanel();
         statutMaritalPanel.setLayout(new FlowLayout());
 
         optionCelibataire = new JRadioButton("Célibataire");
@@ -148,25 +169,37 @@ public class RegisterView extends JPanel {
         buttonGroupMarital.add(optionCelibataire);
         buttonGroupMarital.add(optionMarie);
 
+        optionCelibataire.setBackground(new Color(200, 200, 200));
+        optionMarie.setBackground(new Color(200, 200, 200));
+
         statutMaritalPanel.add(optionCelibataire);
         statutMaritalPanel.add(optionMarie);
+
+        statutMaritalPanel.setBackground(new Color(200, 200, 200));
 
         //Ajout des composants de eastClientPanel
 
         detailEmploiTA = new JTextArea(2,15);
         detailEmploiTA.setLineWrap(true);
         detailEmploiTA.setWrapStyleWord(true);
+        detailEmploiTA.setBackground(new Color(238, 238, 238));
         revenuAnnuel = new JTextField(15);
+        revenuAnnuel.setBorder(null);
+        revenuAnnuel.setPreferredSize(new Dimension(0,22));
+        revenuAnnuel.setBackground(new Color(238, 238, 238));
         noteCredit = new JTextField(15);
+        noteCredit.setBorder(null);
+        noteCredit.setPreferredSize(new Dimension(0,22));
+        noteCredit.setBackground(new Color(238, 238, 238));
         dureeCanada = new JTextField(15);
+        dureeCanada.setBorder(null);
+        dureeCanada.setPreferredSize(new Dimension(0,22));
+        dureeCanada.setBackground(new Color(238, 238, 238));
         List<JPanel> clientRows = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
             clientRows.add(new JPanel(new FlowLayout(FlowLayout.LEFT)));
         }
         clientRows.get(0).add(new JLabel("<html><body style='width: 100px'>Informations sur votre emploi :"));
-        detailEmploiTA = new JTextArea(2,15);
-        detailEmploiTA.setLineWrap(true);
-        detailEmploiTA.setWrapStyleWord(true);
         clientRows.get(0).add(detailEmploiTA);
         clientRows.get(1).add(new JLabel("<html><body style='width: 100px'>Revenu Annuel :"));
         clientRows.get(1).add(revenuAnnuel);
@@ -185,12 +218,16 @@ public class RegisterView extends JPanel {
         eastPanel.add(eastClientPanel, "Client");
 
         //Creation des JRadioButtons pour le niveau de risque souhaite
-        JPanel niveauRisquePanel = new JPanel();
+        niveauRisquePanel = new JPanel();
         niveauRisquePanel.setLayout(new FlowLayout());
 
         optionPeuRisque = new JRadioButton("Peu de risque");
         optionRisque = new JRadioButton("Risqué");
         optionTresRisque = new JRadioButton("Très risqué");
+
+        optionPeuRisque.setBackground(new Color(200, 200, 200));
+        optionRisque.setBackground(new Color(200, 200, 200));
+        optionTresRisque.setBackground(new Color(200, 200, 200));
 
         buttonGroupRisque = new ButtonGroup();
         buttonGroupRisque.add(optionPeuRisque);
@@ -201,13 +238,19 @@ public class RegisterView extends JPanel {
         niveauRisquePanel.add(optionRisque);
         niveauRisquePanel.add(optionTresRisque);
 
+        niveauRisquePanel.setBackground(new Color(200, 200, 200));
+
         //Creation des JRadioButtons pour le niveau d'éducation
-        JPanel niveauEducPanel = new JPanel();
+        niveauEducPanel = new JPanel();
         niveauEducPanel.setLayout(new FlowLayout());
 
         optionPeu = new JRadioButton("Peu");
         optionMoyen = new JRadioButton("Moyen");
         optionBeaucoup = new JRadioButton("Beaucoup");
+
+        optionPeu.setBackground(new Color(200, 200, 200));
+        optionMoyen.setBackground(new Color(200, 200, 200));
+        optionBeaucoup.setBackground(new Color(200, 200, 200));
 
         buttonGroupEducation = new ButtonGroup();
         buttonGroupEducation.add(optionPeu);
@@ -218,6 +261,8 @@ public class RegisterView extends JPanel {
         niveauEducPanel.add(optionMoyen);
         niveauEducPanel.add(optionBeaucoup);
 
+        niveauEducPanel.setBackground(new Color(200, 200, 200));
+
 
         //Ajout des composants de westInvestorPanel
 
@@ -225,6 +270,9 @@ public class RegisterView extends JPanel {
         detailBancaireTA.setLineWrap(true);
         detailBancaireTA.setWrapStyleWord(true);
         nomBanque = new JTextField(15);
+        nomBanque.setBorder(null);
+        nomBanque.setPreferredSize(new Dimension(0,22));
+        nomBanque.setBackground(new Color(238, 238, 238));
         List<JPanel> investorRows = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             investorRows.add(new JPanel(new FlowLayout(FlowLayout.LEFT)));
@@ -260,6 +308,10 @@ public class RegisterView extends JPanel {
 
         mainPanel.add(southPanel, BorderLayout.SOUTH);
 
+        //Make panels with different Colors
+        mainPanel.setBackground(new Color(168, 168, 168, 128));
+        setAllComponentChildsAsTransparent(mainPanel);
+
         add(mainPanel);
 
         //All ActionListener
@@ -279,6 +331,8 @@ public class RegisterView extends JPanel {
                     eastCards.show(eastPanel, "Investor");
                 else
                     eastCards.show(eastPanel, "Empty");
+                revalidate();
+                repaint();
             }
         });
 
@@ -404,4 +458,17 @@ public class RegisterView extends JPanel {
         registeredMessage.setText(message);
     }
 
+    public void setAllComponentChildsAsTransparent(JPanel panel){
+        for (Component component : panel.getComponents()){
+            try {
+                if (component instanceof JPanel) {
+                    if(component != niveauRisquePanel && component != niveauEducPanel && component != statutMaritalPanel) { // Add all panels with custom background
+                        ((JPanel) component).setOpaque(false);
+                        component.setBackground(new Color(0, 0, 0, 0));
+                        setAllComponentChildsAsTransparent((JPanel) component);
+                    }
+                }
+            }catch (Exception ignored){}
+        }
+    }
 }

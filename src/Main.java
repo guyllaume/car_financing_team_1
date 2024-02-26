@@ -3,6 +3,7 @@ import controller.InvestorRegisterController;
 import model.Client;
 import model.Investor;
 import view.LoginView;
+import view.PictureView;
 import view.RegisterView;
 
 import javax.swing.*;
@@ -13,7 +14,7 @@ import java.awt.event.ActionListener;
 public class Main extends JFrame implements RegisterView.RetourALaPagePrincipale {
     private CardLayout cardLayout = new CardLayout();
     private JPanel cardPanel = new JPanel(cardLayout);
-    private JPanel mainPanel = new JPanel(new FlowLayout());
+    private PictureView mainPanel = new PictureView("src/view/Voiture.jpg");
     private LoginView loginView = new LoginView();
     private RegisterView registerView = new RegisterView();
     private Client client = new Client();
@@ -30,6 +31,7 @@ public class Main extends JFrame implements RegisterView.RetourALaPagePrincipale
         JButton loginButton = new JButton("Connexion");
         JButton registerButton = new JButton("Inscription");
 
+        mainPanel.setLayout(new FlowLayout());
         mainPanel.add(loginButton);
         mainPanel.add(registerButton);
 
