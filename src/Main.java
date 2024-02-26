@@ -11,7 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Main extends JFrame implements RegisterView.RetourALaPagePrincipale {
+public class Main extends JFrame {
     private CardLayout cardLayout = new CardLayout();
     private JPanel cardPanel = new JPanel(cardLayout);
     private PictureView mainPanel = new PictureView("src/view/Voiture.jpg");
@@ -43,7 +43,11 @@ public class Main extends JFrame implements RegisterView.RetourALaPagePrincipale
 
         registerView.addEnregistrerListener(e ->{
             pack();
-            setSize(800, getHeight());
+            setSize(getWidth()+60, getHeight()+25);
+        });
+        registerView.addRetourALaPagePrincipaleListener(e -> {
+            setSize(600, 400);
+            cardLayout.show(cardPanel, "Main");
         });
         loginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -53,14 +57,14 @@ public class Main extends JFrame implements RegisterView.RetourALaPagePrincipale
 
         registerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                setSize(800, 400);
+                pack();
+                setSize(getWidth()+60, getHeight()+25);
                 cardLayout.show(cardPanel, "Register");
             }
         });
 
         irController = new InvestorRegisterController(investor, registerView);
         crController = new ClientRegisterController(client, registerView);
-        registerView.ajoutDuListener(this);
     }
 
     public static void main(String[] args) {
@@ -71,11 +75,5 @@ public class Main extends JFrame implements RegisterView.RetourALaPagePrincipale
                 frame.setVisible(true);
             }
         });
-    }
-
-    @Override
-    public void retournerAlaPagePrincipale() {
-        setSize(600, 400);
-        cardLayout.show(cardPanel, "Main");
     }
 }

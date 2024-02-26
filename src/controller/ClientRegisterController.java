@@ -16,8 +16,10 @@ public class ClientRegisterController {
             try{
                 if(rv.getUserType().equals("Client")) {
                     infoEntered = rv.getClientInfo();
+                    if(!checkIfValidEmail(infoEntered.get(1)))
+                        throw new RuntimeException("Veuillez entre un email valide");
                     if (!checkIfInfoEnteredUser(infoEntered))
-                        throw new RuntimeException("Enter information in all fields");
+                        throw new RuntimeException("Veuillez Entrer vos informations dans tous les champs");
                     if (!checkIfPasswordRespectsCode(infoEntered.get(2)))
                         throw new RuntimeException("Votre mot de passe doit contenir plus de 7 caractères, \n" +
                                 "incluant un caractère spécial, une lettre majuscule, et un chiffre");
@@ -91,6 +93,12 @@ public class ClientRegisterController {
             if(registeredInfo.isEmpty())
                 return false;
         }
+        return true;
+    }
+    private boolean checkIfValidEmail(String email){
+        return email.contains("@") && (email.contains(".com") || email.contains(".ca"));
+    }
+    private boolean checkIfValidPhoneNumber(String phone){
         return true;
     }
 }

@@ -3,8 +3,6 @@ package view;
 import error.NotSelectedOption;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,7 +21,6 @@ public class RegisterView extends PictureView {
     private JPanel eastPanel;
     private JPanel southPanel;
     private JPanel southPanelButtons;
-    private RetourALaPagePrincipale retourALaPagePrincipaleListener;
     private JButton btnRetour;
     private JButton btnEnregistrer;
     private JLabel title;
@@ -112,6 +109,7 @@ public class RegisterView extends PictureView {
         telephone.setPreferredSize(new Dimension(0,22));
         telephone.setBorder(null);
         telephone.setBackground(new Color(238, 238, 238));
+
         List<JPanel> userRows = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             userRows.add(new JPanel(new FlowLayout(FlowLayout.LEFT)));
@@ -315,13 +313,6 @@ public class RegisterView extends PictureView {
         add(mainPanel);
 
         //All ActionListener
-        btnRetour.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (retourALaPagePrincipaleListener != null) {
-                    retourALaPagePrincipaleListener.retournerAlaPagePrincipale(); // Notify listener
-                }
-            }
-        });
         userTypeJCB.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 userSelected = userTypeJCB.getSelectedItem().toString();
@@ -340,11 +331,11 @@ public class RegisterView extends PictureView {
     public interface RetourALaPagePrincipale {
         void retournerAlaPagePrincipale();
     }
-    public void ajoutDuListener(RetourALaPagePrincipale listener) {
-        this.retourALaPagePrincipaleListener = listener;
-    }
     public void addEnregistrerListener(ActionListener listener){
         btnEnregistrer.addActionListener(listener);
+    }
+    public void addRetourALaPagePrincipaleListener(ActionListener listener){
+        btnRetour.addActionListener(listener);
     }
     private List<String> getUserInfo(){
         List<String> userInfos = new ArrayList<>();
