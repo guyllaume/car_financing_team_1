@@ -2,18 +2,18 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 public class LoginView extends PictureView {
-    private RetourALaPagePrincipale retourALaPagePrincipaleListener;
     private JButton btnRetour;
     private JLabel usernameLabel;
     private JTextField usernameField;
     private JLabel passwordLabel;
     private JPasswordField passwordField;
     private JButton loginButton;
-    private JLabel retourLabel;
+    private JPanel loginButtonPanel;
+    private JPanel btnRetourPanel;
 
     public LoginView() {
         super("src/view/Voiture.jpg");
@@ -21,34 +21,43 @@ public class LoginView extends PictureView {
 
         usernameLabel = new JLabel("Email:");
         usernameField = new JTextField();
+        usernameLabel.setBorder(BorderFactory.createEmptyBorder(0,200,0,0));
+        usernameField.setBorder(BorderFactory.createMatteBorder(20,0,20,100, Color.WHITE));
+        usernameField.setBackground(Color.LIGHT_GRAY);
         add(usernameLabel);
         add(usernameField);
 
         passwordLabel = new JLabel("Password:");
         passwordField = new JPasswordField();
+        passwordLabel.setBorder(BorderFactory.createEmptyBorder(0,200,0,0));
+        passwordField.setBorder(BorderFactory.createMatteBorder(20,0,20,100, Color.WHITE));
+        passwordField.setBackground(Color.LIGHT_GRAY);
         add(passwordLabel);
         add(passwordField);
 
         loginButton = new JButton("Login");
-        add(loginButton);
+        loginButton.setPreferredSize(new Dimension(200,30));
+        loginButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        loginButtonPanel.setOpaque(false);
+        loginButtonPanel.add(loginButton);
+        add(loginButtonPanel);
 
         btnRetour = new JButton("Retour à la page d'accueil");
-        add(btnRetour);
+        btnRetour.setPreferredSize(new Dimension(200,30));
+        btnRetourPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        btnRetourPanel.setOpaque(false);
+        btnRetourPanel.add(btnRetour);
+        add(btnRetourPanel);
 
-
-        btnRetour.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (retourALaPagePrincipaleListener != null) {
-                    retourALaPagePrincipaleListener.retournerAlaPagePrincipale(); // Notify listener
-                }
-            }
+        loginButton.addActionListener(e -> {
+            JOptionPane.showMessageDialog(null, "Username : " + usernameField.getText() + "\nPassword : " + new String(passwordField.getPassword()));
         });
-
-        setPreferredSize(new Dimension(800, 400));
+    }
+    public void addRetourALaPagePrincipaleListener(ActionListener listener){
+        btnRetour.addActionListener(listener);
     }
 
-    public interface RetourALaPagePrincipale {
-        void retournerAlaPagePrincipale();
-    }
+    private void infoEnteredToString(){
 
+    }
 }
