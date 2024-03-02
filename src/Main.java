@@ -76,6 +76,10 @@ public class Main extends JFrame {
             setSize(600, 500);
             cardLayout.show(cardPanel, "Main");
         });
+        loginView.addRetourALaPagePrincipaleListener(e -> {
+            setSize(600, 400);
+            cardLayout.show(cardPanel, "Main");
+        });
         loginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(cardPanel, "Login");
