@@ -1,18 +1,19 @@
 package model;
 
 public class User {
+    private int id;
     private String nomComplet;
     private String email;
     private String password;
     private String telephone;
 
     public User(){}
-    /*public User(String nomComplet, String email, String password, String telephone){
+    public User(String nomComplet, String email, String password, String telephone){
         this.nomComplet = nomComplet;
         this.email = email;
         this.password = password;
         this.telephone = telephone;
-    }*/
+    }
 
     @Override
     public String toString(){
@@ -52,5 +53,12 @@ public class User {
 
     public void setNomComplet(String nomComplet) {
         this.nomComplet = nomComplet;
+    }
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

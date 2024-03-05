@@ -1,7 +1,7 @@
 package model;
 
 public class Investor extends User{
-
+    private int id;
     private String nomBanque;
     private String detailBancaire;
     private String risque;
@@ -59,5 +59,13 @@ public class Investor extends User{
 
     public void setEducation(String education) {
         this.education = education;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+//This class will not be used because of redundancy still was usefull to create other DAOImpl
 public class PersonDAOImpl implements PersonDAO {
 
     public void addPerson(Person person) {
