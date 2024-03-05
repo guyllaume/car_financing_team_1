@@ -11,9 +11,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAOImpl implements UserDAO{
-    //Will be done through Client or Investor
+    public User getUserByEmail(String email){
+        String SQL_SELECT = "SELECT * FROM users WHERE email = ?";
+        User user = new User();
+        try (Connection conn = PostgresSQLConfig.connect();
+             PreparedStatement statement = conn.prepareStatement(SQL_SELECT)) {
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                int clientId = resultSet.getInt("idClient");
+                int investorId = resultSet.getInt("idInvestor");
+                String nomComplet = resultSet.getString("nomComplet");
+                String resultEmail = resultSet.getString("email");
+                String password = resultSet.getString("password");
+                String telephone = resultSet.getString("telephone");
+
+                user = new User(nomComplet, resultEmail, password, telephone);
+                user.setId(id);
+                if (clientId != 0){
+
+                }else{
+
+                }
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
     public void addUser(User user) {
-        String SQL_INSERT = "INSERT INTO user (nomComplet, email, password, telephone) VALUES (?, ?, ?, ?)";
+        //Will be done through Client or Investor
+        /*String SQL_INSERT = "INSERT INTO user (nomComplet, email, password, telephone) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = PostgresSQLConfig.connect();
              PreparedStatement statement = conn.prepareStatement(SQL_INSERT)) {
@@ -31,7 +63,7 @@ public class UserDAOImpl implements UserDAO{
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     public void deleteUser(User user) {

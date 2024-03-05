@@ -1,17 +1,26 @@
 package model;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+
 public class User {
     private int id;
+    private int clientId;
+
+    private int investorId;
     private String nomComplet;
     private String email;
     private String password;
+    private byte[] salt;
     private String telephone;
 
     public User(){}
     public User(String nomComplet, String email, String password, String telephone){
         this.nomComplet = nomComplet;
         this.email = email;
-        this.password = password;
+        createSalt();
+        hashPassword(password, salt);
         this.telephone = telephone;
     }
 
@@ -61,4 +70,43 @@ public class User {
     public void setId(int id) {
         this.id = id;
     }
+
+    public int getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
+    }
+
+    public int getInvestorId() {
+        return investorId;
+    }
+
+    public void setInvestorId(int investorId) {
+        this.investorId = investorId;
+    }
+    private void hashPassword(String password, byte[] salt){
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            digest.update(salt);
+            byte[] hashBytes = digest.digest(password.getBytes());
+
+            StringBuilder sb = new StringBuilder();
+            for (byte b : hashBytes) {
+                sb.append(String.format("%02x", b));
+            }
+            password = sb.toString();
+        }catch (NoSuchAlgorithmException e){
+            System.out.println("Something went wrong with the hashing process..");
+        }
+        this.password = password;
+    }
+    private void createSalt(){
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[16];
+        random.nextBytes(salt);
+        this.salt = salt;
+    }
+
 }

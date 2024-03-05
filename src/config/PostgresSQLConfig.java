@@ -45,7 +45,8 @@ public class PostgresSQLConfig {
                 "nomComplet VARCHAR(255)," +
                 "email VARCHAR(255) UNIQUE," +
                 "password VARCHAR(255)," +
-                "telephone VARCHAR(15)" +
+                "salt BYTEA(16)," +
+                "telephone VARCHAR(15)," +
                 "CONSTRAINT fk_Client_id" +
                 "FOREIGN KEY (idClient)" +
                 "REFERENCES client(id)" +
@@ -56,8 +57,8 @@ public class PostgresSQLConfig {
                 "ON DELETE CASCADE," +
                 "CONSTRAINT check_only_one_relation" +
                 "CHECK (" +
-                "(client_id IS NULL AND investor_id IS NOT NULL) OR" +
-                "(client_id IS NOT NULL AND investor_id IS NULL)" +
+                "(idClient IS NULL AND idInvestor IS NOT NULL) OR" +
+                "(idClient IS NOT NULL AND idInvestor IS NULL)" +
                 ")" +
                 ");";
 
