@@ -19,7 +19,7 @@ public class InvestorDAOImpl extends UserDAOImpl {
         this.education = education;*/
     public void addInvestor(Investor investor) {
         String SQL_INSERT = "INSERT INTO investor (nomBanque, detailBancaire, risque, education) VALUES (?, ?, ?, ?)";
-        String SQL_INSERT2 = "INSERT INTO user (idInvestor, nomComplet, email, password, salt, telephone) VALUES (?, ?, ?, ?, ?, ?)";
+        String SQL_INSERT2 = "INSERT INTO users (idInvestor, nomComplet, email, password, salt, telephone) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = PostgresSQLConfig.connect();
              PreparedStatement statement = conn.prepareStatement(SQL_INSERT)) {

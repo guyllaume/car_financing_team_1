@@ -69,7 +69,7 @@ public class UserDAOImpl implements UserDAO{
 
     //No use really
     public List<User> getAllUsers() {
-        String SQL_SELECT = "SELECT * FROM user;";
+        String SQL_SELECT = "SELECT * FROM users;";
         List<User> users = new ArrayList<>();
 
         try (Connection conn = PostgresSQLConfig.connect();

@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 
 public class PostgresSQLConfig {
     private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
@@ -38,24 +37,24 @@ public class PostgresSQLConfig {
                 "risque VARCHAR(50)," +
                 "education VARCHAR(50)" +
                 ");";
-        String createTableUser = "CREATE TABLE IF NOT EXISTS user (" +
+        String createTableUser = "CREATE TABLE IF NOT EXISTS users (" +
                 "id SERIAL PRIMARY KEY," +
                 "idClient INT," +
                 "idInvestor INT," +
                 "nomComplet VARCHAR(255)," +
                 "email VARCHAR(255) UNIQUE," +
                 "password VARCHAR(255)," +
-                "salt BYTEA(16)," +
+                "salt BYTEA," +
                 "telephone VARCHAR(15)," +
-                "CONSTRAINT fk_Client_id" +
+                "CONSTRAINT fk_Client_id " +
                 "FOREIGN KEY (idClient)" +
                 "REFERENCES client(id)" +
                 "ON DELETE CASCADE," +
-                "CONSTRAINT fk_Investor_id" +
+                "CONSTRAINT fk_Investor_id " +
                 "FOREIGN KEY (idInvestor)" +
                 "REFERENCES investor(id)" +
                 "ON DELETE CASCADE," +
-                "CONSTRAINT check_only_one_relation" +
+                "CONSTRAINT check_only_one_relation " +
                 "CHECK (" +
                 "(idClient IS NULL AND idInvestor IS NOT NULL) OR" +
                 "(idClient IS NOT NULL AND idInvestor IS NULL)" +
