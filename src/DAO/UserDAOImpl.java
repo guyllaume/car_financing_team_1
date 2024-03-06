@@ -30,11 +30,8 @@ public class UserDAOImpl implements UserDAO{
 
                 user = new User(nomComplet, resultEmail, password, telephone);
                 user.setId(id);
-                if (clientId != 0){
-
-                }else{
-
-                }
+                user.setClientId(clientId);
+                user.setInvestorId(investorId);
             }
 
 

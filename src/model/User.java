@@ -7,7 +7,6 @@ import java.security.SecureRandom;
 public class User {
     private int id;
     private int clientId;
-
     private int investorId;
     private String nomComplet;
     private String email;
