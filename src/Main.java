@@ -1,12 +1,9 @@
-import DAO.PersonDAO;
-import DAO.PersonDAOImpl;
 import config.PostgresSQLConfig;
 import controller.ClientRegisterController;
 import controller.InvestorRegisterController;
 import controller.LoginToAccountController;
 import model.Client;
 import model.Investor;
-import model.Person;
 import view.LoginView;
 import view.PictureView;
 import view.RegisterView;
