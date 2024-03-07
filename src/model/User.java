@@ -116,6 +116,11 @@ public class User {
         this.salt = salt;
     }
 
+    public void createSaltAndHash(){
+        createSalt();
+        hashPassword(password, salt);
+    }
+
     public boolean verifyPassword(String candidatePassword){
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");

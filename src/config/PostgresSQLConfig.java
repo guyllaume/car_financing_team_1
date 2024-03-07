@@ -27,6 +27,7 @@ public class PostgresSQLConfig {
                 "infoEmploi VARCHAR(255)," +
                 "revenuAnnuel DOUBLE PRECISION," +
                 "credit INT," +
+                "dateNaissance DATE," +
                 "statutMarital VARCHAR(30)," +
                 "anneeCanada INT" +
                 ");";

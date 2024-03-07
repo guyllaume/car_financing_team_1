@@ -1,5 +1,7 @@
 package controller;
 
+import DAO.ClientDAOImpl;
+import DAO.InvestorDAOImpl;
 import error.NotSelectedOption;
 import model.Investor;
 import view.RegisterView;
@@ -7,6 +9,7 @@ import view.RegisterView;
 import java.util.List;
 
 public class InvestorRegisterController {
+    private InvestorDAOImpl investorDAO;
 
     public InvestorRegisterController(Investor investor, RegisterView rv){
         rv.addEnregistrerListener(e -> {
@@ -32,6 +35,9 @@ public class InvestorRegisterController {
                     investor.setDetailBancaire(infoEntered.get(6));
                     investor.setRisque(infoEntered.get(7));
                     investor.setEducation(infoEntered.get(8));
+                    investor.createSaltAndHash();
+                    investorDAO = new InvestorDAOImpl();
+                    investorDAO.addInvestor(investor);
 
                     rv.setMessage("<html>Votre Inscription c'est fait avec succès!" + investor.toString() + "</html>");
                 }

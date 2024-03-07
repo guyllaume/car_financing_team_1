@@ -37,6 +37,7 @@ public class UserDAOImpl implements UserDAO{
                 user.setClientId(clientId);
                 user.setInvestorId(investorId);
                 user.setSalt(salt);
+                user.setPassword(password);
 
             }
 

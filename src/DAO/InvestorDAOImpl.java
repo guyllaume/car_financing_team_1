@@ -4,10 +4,7 @@ import config.PostgresSQLConfig;
 import model.Investor;
 import model.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 public class InvestorDAOImpl extends UserDAOImpl {
@@ -21,7 +18,7 @@ public class InvestorDAOImpl extends UserDAOImpl {
         String SQL_INSERT2 = "INSERT INTO users (idInvestor, nomComplet, email, password, salt, telephone) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = PostgresSQLConfig.connect();
-             PreparedStatement statement = conn.prepareStatement(SQL_INSERT)) {
+             PreparedStatement statement = conn.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, investor.getNomBanque());
             statement.setString(2, investor.getDetailBancaire());
@@ -42,7 +39,8 @@ public class InvestorDAOImpl extends UserDAOImpl {
                     statement1.setString(2, investor.getNomComplet());
                     statement1.setString(3, investor.getEmail());
                     statement1.setString(4, investor.getPassword());
-                    statement1.setString(5, investor.getTelephone());
+                    statement1.setBytes(5, investor.getSalt());
+                    statement1.setString(6, investor.getTelephone());
 
                     affectedRows = statement1.executeUpdate();
 
@@ -96,6 +94,8 @@ public class InvestorDAOImpl extends UserDAOImpl {
                     investor = new Investor(user.getNomComplet(), user.getEmail(), user.getPassword(), user.getTelephone(), nomBanque, detailBancaire, risque, education);
                     investor.setId(user.getId());
                     investor.setInvestorId(id);
+                    investor.setSalt(user.getSalt());
+                    investor.setPassword(user.getPassword());
                     return investor;
                 }
             } catch (SQLException e) {
