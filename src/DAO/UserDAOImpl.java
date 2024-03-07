@@ -11,12 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAOImpl implements UserDAO{
+
+    public UserDAOImpl(){}
     public User getUserByEmail(String email){
         String SQL_SELECT = "SELECT * FROM users WHERE email = ?";
         User user = new User();
         try (Connection conn = PostgresSQLConfig.connect();
              PreparedStatement statement = conn.prepareStatement(SQL_SELECT)) {
 
+            statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {

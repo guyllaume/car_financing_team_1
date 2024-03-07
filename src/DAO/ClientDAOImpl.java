@@ -12,6 +12,11 @@ import java.time.LocalDate;
 
 public class ClientDAOImpl extends UserDAOImpl{
 
+
+    public ClientDAOImpl(){
+        super();
+    }
+
     public Client getClientByEmail(String email){
         User user = super.getUserByEmail(email);
         if (user.getClientId() != 0){

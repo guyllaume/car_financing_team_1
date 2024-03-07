@@ -12,6 +12,10 @@ import java.util.List;
 
 public class InvestorDAOImpl extends UserDAOImpl {
 
+    public InvestorDAOImpl(){
+        super();
+    }
+
     public void addInvestor(Investor investor) {
         String SQL_INSERT = "INSERT INTO investor (nomBanque, detailBancaire, risque, education) VALUES (?, ?, ?, ?)";
         String SQL_INSERT2 = "INSERT INTO users (idInvestor, nomComplet, email, password, salt, telephone) VALUES (?, ?, ?, ?, ?, ?)";

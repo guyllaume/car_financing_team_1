@@ -24,6 +24,7 @@ public class LoginToAccountController {
         lv.addLoginListener(e -> {
             if (checkIfValidEmail(lv.getUsername())) {
                 if (lv.getSelectedAccountType().equals("Client")) {
+                    clientDAO = new ClientDAOImpl();
                     this.client = clientDAO.getClientByEmail(lv.getUsername());
                     if (this.client != null) {
                         if (this.client.verifyPassword(lv.getPassword())) {
@@ -49,6 +50,7 @@ public class LoginToAccountController {
                         lv.showErrorMessage("The account entered doesn't exist");
                     }
                 }else{
+                    investorDAO = new InvestorDAOImpl();
                     this.investor = investorDAO.getInvestorByEmail(lv.getUsername());
                     if (this.investor != null) {
                         if (this.investor.verifyPassword(lv.getPassword())) {
