@@ -85,6 +85,14 @@ public class User {
     public void setInvestorId(int investorId) {
         this.investorId = investorId;
     }
+
+    public byte[] getSalt() {
+        return salt;
+    }
+
+    public void setSalt(byte[] salt) {
+        this.salt = salt;
+    }
     private void hashPassword(String password, byte[] salt){
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -106,6 +114,24 @@ public class User {
         byte[] salt = new byte[16];
         random.nextBytes(salt);
         this.salt = salt;
+    }
+
+    public boolean verifyPassword(String candidatePassword){
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            digest.update(salt);
+            byte[] hashBytes = digest.digest(candidatePassword.getBytes());
+
+            StringBuilder sb = new StringBuilder();
+            for (byte b : hashBytes) {
+                sb.append(String.format("%02x", b));
+            }
+            candidatePassword = sb.toString();
+            return candidatePassword.equals(password);
+        }catch (NoSuchAlgorithmException e){
+            System.out.println("Something went wrong with the hashing process..");
+        }
+        return false;
     }
 
 }

@@ -3,6 +3,7 @@ import DAO.PersonDAOImpl;
 import config.PostgresSQLConfig;
 import controller.ClientRegisterController;
 import controller.InvestorRegisterController;
+import controller.LoginToAccountController;
 import model.Client;
 import model.Investor;
 import model.Person;
@@ -27,6 +28,7 @@ public class Main extends JFrame {
     private Investor investor = new Investor();
     private ClientRegisterController crController;
     private InvestorRegisterController irController;
+    private LoginToAccountController ltaController;
 
     public Main() {
         setTitle("Financement Automobile XYZ");
@@ -96,6 +98,7 @@ public class Main extends JFrame {
 
         irController = new InvestorRegisterController(investor, registerView);
         crController = new ClientRegisterController(client, registerView);
+        ltaController = new LoginToAccountController(client,investor,cardPanel,cardLayout,loginView);
 
     }
 

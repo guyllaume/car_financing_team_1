@@ -12,11 +12,6 @@ import java.util.List;
 
 public class InvestorDAOImpl extends UserDAOImpl {
 
-    /*super(nomComplet, email, password, numeroTelephone);
-        this.nomBanque = nomBanque;
-        this.detailBancaire = detailBancaire;
-        this.risque = risque;
-        this.education = education;*/
     public void addInvestor(Investor investor) {
         String SQL_INSERT = "INSERT INTO investor (nomBanque, detailBancaire, risque, education) VALUES (?, ?, ?, ?)";
         String SQL_INSERT2 = "INSERT INTO users (idInvestor, nomComplet, email, password, salt, telephone) VALUES (?, ?, ?, ?, ?, ?)";
@@ -75,9 +70,34 @@ public class InvestorDAOImpl extends UserDAOImpl {
             e.printStackTrace();
         }
     }
-    public Investor getInvestor(String email){
+    public Investor getInvestorByEmail(String email){
         User user = super.getUserByEmail(email);
+        if (user.getInvestorId() != 0){
+            Investor investor;
+            String SQL_SELECT = "SELECT * FROM investor WHERE id = ?;";
 
+            try (Connection conn = PostgresSQLConfig.connect();
+                 PreparedStatement statement = conn.prepareStatement(SQL_SELECT)) {
+
+                statement.setInt(1, user.getInvestorId());
+                ResultSet resultSet = statement.executeQuery();
+
+                if(resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    String nomBanque = resultSet.getString("nomBanque");
+                    String detailBancaire = resultSet.getString("detailBancaire");
+                    String risque = resultSet.getString("risque");
+                    String education = resultSet.getString("education");
+
+                    investor = new Investor(user.getNomComplet(), user.getEmail(), user.getPassword(), user.getTelephone(), nomBanque, detailBancaire, risque, education);
+                    investor.setId(user.getId());
+                    investor.setInvestorId(id);
+                    return investor;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
         return null;
     }
     //Inutile

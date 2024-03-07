@@ -328,9 +328,6 @@ public class RegisterView extends PictureView {
         });
 
     }
-    public interface RetourALaPagePrincipale {
-        void retournerAlaPagePrincipale();
-    }
     public void addEnregistrerListener(ActionListener listener){
         btnEnregistrer.addActionListener(listener);
     }

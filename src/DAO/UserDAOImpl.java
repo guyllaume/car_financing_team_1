@@ -27,11 +27,14 @@ public class UserDAOImpl implements UserDAO{
                 String resultEmail = resultSet.getString("email");
                 String password = resultSet.getString("password");
                 String telephone = resultSet.getString("telephone");
+                byte[] salt = resultSet.getBytes("salt");
 
                 user = new User(nomComplet, resultEmail, password, telephone);
                 user.setId(id);
                 user.setClientId(clientId);
                 user.setInvestorId(investorId);
+                user.setSalt(salt);
+
             }
 
 

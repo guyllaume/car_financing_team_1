@@ -19,10 +19,10 @@ public class LoginView extends PictureView {
         super("src/view/Voiture.jpg");
         setLayout(new GridBagLayout());
         gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10,0,10,5);
+        gbc.insets = new Insets(10, 0, 10, 5);
 
         usernameLabel = new JLabel("Email:");
-        usernameLabel.setForeground(new Color(22,197,144));
+        usernameLabel.setForeground(new Color(22, 197, 144));
         usernameField = new JTextField();
         usernameField.setBackground(Color.LIGHT_GRAY);
         usernameField.setPreferredSize(new Dimension(200, usernameField.getPreferredSize().height));
@@ -34,7 +34,7 @@ public class LoginView extends PictureView {
         add(usernameField, gbc);
 
         passwordLabel = new JLabel("Password:");
-        passwordLabel.setForeground(new Color(22,197,144));
+        passwordLabel.setForeground(new Color(22, 197, 144));
         passwordField = new JPasswordField();
         passwordField.setBackground(Color.LIGHT_GRAY);
         passwordField.setPreferredSize(new Dimension(200, passwordField.getPreferredSize().height));
@@ -63,17 +63,28 @@ public class LoginView extends PictureView {
         gbc.gridx = 1;
         gbc.gridy = 3;
         add(btnRetour, gbc);
-
-
-        loginButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(null, "Username : " + usernameField.getText() + "\nPassword : " + new String(passwordField.getPassword()));
-        });
     }
-    public void addRetourALaPagePrincipaleListener(ActionListener listener){
+
+    public void addRetourALaPagePrincipaleListener(ActionListener listener) {
         btnRetour.addActionListener(listener);
     }
 
-    private void infoEnteredToString(){
+    public void addLoginListener(ActionListener listener) {
+        loginButton.addActionListener(listener);
+    }
 
+    public String getUsername() {
+        return usernameField.getText();
+    }
+
+    public String getPassword() {
+        return new String(passwordField.getPassword());
+    }
+    public String getSelectedAccountType() {
+        return String.valueOf(userTypeJCB.getSelectedItem());
+    }
+
+    public void showErrorMessage(String message){
+        JOptionPane.showMessageDialog(null,message);
     }
 }
