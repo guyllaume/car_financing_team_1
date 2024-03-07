@@ -1,5 +1,6 @@
 package controller;
 
+import DAO.ClientDAOImpl;
 import error.NotSelectedOption;
 import model.Client;
 import view.RegisterView;
@@ -10,6 +11,7 @@ import java.util.List;
 
 public class ClientRegisterController {
 
+    private ClientDAOImpl clientDao;
     public ClientRegisterController(Client client, RegisterView rv){
         rv.addEnregistrerListener(e -> {
             List<String> infoEntered;
@@ -59,6 +61,10 @@ public class ClientRegisterController {
                     client.setDateNaissance(castDateNaissance);
                     client.setStatutMarital(infoEntered.get(9));
                     client.setDateCanada(castDuree);
+                    client.createSaltAndHash();
+                    clientDao = new ClientDAOImpl();
+                    clientDao.addClient(client);
+
 
                     rv.setMessage("<html>Votre Inscription c'est fait avec succès!" + client.toString() + "</html>");
                 }

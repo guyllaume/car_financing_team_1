@@ -12,52 +12,79 @@ public class LoginView extends PictureView {
     private JLabel passwordLabel;
     private JPasswordField passwordField;
     private JButton loginButton;
-    private JPanel loginButtonPanel;
-    private JPanel btnRetourPanel;
+    private JComboBox userTypeJCB;
+    private GridBagConstraints gbc;
 
     public LoginView() {
         super("src/view/Voiture.jpg");
-        setLayout(new GridLayout(5, 2));
+        setLayout(new GridBagLayout());
+        gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 0, 10, 5);
 
         usernameLabel = new JLabel("Email:");
+        usernameLabel.setForeground(new Color(22, 197, 144));
         usernameField = new JTextField();
-        usernameLabel.setBorder(BorderFactory.createEmptyBorder(0,200,0,0));
-        usernameField.setBorder(BorderFactory.createMatteBorder(20,0,20,100, Color.WHITE));
         usernameField.setBackground(Color.LIGHT_GRAY);
-        add(usernameLabel);
-        add(usernameField);
+        usernameField.setPreferredSize(new Dimension(200, usernameField.getPreferredSize().height));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        add(usernameLabel, gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        add(usernameField, gbc);
 
         passwordLabel = new JLabel("Password:");
+        passwordLabel.setForeground(new Color(22, 197, 144));
         passwordField = new JPasswordField();
-        passwordLabel.setBorder(BorderFactory.createEmptyBorder(0,200,0,0));
-        passwordField.setBorder(BorderFactory.createMatteBorder(20,0,20,100, Color.WHITE));
         passwordField.setBackground(Color.LIGHT_GRAY);
-        add(passwordLabel);
-        add(passwordField);
+        passwordField.setPreferredSize(new Dimension(200, passwordField.getPreferredSize().height));
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        add(passwordLabel, gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        add(passwordField, gbc);
+
+        userTypeJCB = new JComboBox<String>(new String[]{"Client", "Investisseur"});
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 2; // Span two columns
+        add(userTypeJCB, gbc);
+        gbc.gridwidth = 1;
 
         loginButton = new JButton("Login");
-        loginButton.setPreferredSize(new Dimension(200,30));
-        loginButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        loginButtonPanel.setOpaque(false);
-        loginButtonPanel.add(loginButton);
-        add(loginButtonPanel);
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        add(loginButton, gbc);
+
 
         btnRetour = new JButton("Retour à la page d'accueil");
-        btnRetour.setPreferredSize(new Dimension(200,30));
-        btnRetourPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        btnRetourPanel.setOpaque(false);
-        btnRetourPanel.add(btnRetour);
-        add(btnRetourPanel);
-
-        loginButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(null, "Username : " + usernameField.getText() + "\nPassword : " + new String(passwordField.getPassword()));
-        });
+        btnRetour.setPreferredSize(new Dimension(200, btnRetour.getPreferredSize().height));
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        add(btnRetour, gbc);
     }
-    public void addRetourALaPagePrincipaleListener(ActionListener listener){
+
+    public void addRetourALaPagePrincipaleListener(ActionListener listener) {
         btnRetour.addActionListener(listener);
     }
 
-    private void infoEnteredToString(){
+    public void addLoginListener(ActionListener listener) {
+        loginButton.addActionListener(listener);
+    }
 
+    public String getUsername() {
+        return usernameField.getText();
+    }
+
+    public String getPassword() {
+        return new String(passwordField.getPassword());
+    }
+    public String getSelectedAccountType() {
+        return String.valueOf(userTypeJCB.getSelectedItem());
+    }
+
+    public void showErrorMessage(String message){
+        JOptionPane.showMessageDialog(null,message);
     }
 }

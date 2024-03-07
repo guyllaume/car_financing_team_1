@@ -3,7 +3,6 @@ package model;
 import java.time.LocalDate;
 
 public class Client extends User{
-
     private String infoEmploi;
     private double revenuAnnuel;
     private int credit;
@@ -13,8 +12,7 @@ public class Client extends User{
     public Client(){
         super();
     }
-    /*public Client(String nomComplet, String email, String password, String numeroTelephone, String infoEmploi,
-                  double revenuAnnuel, int credit, LocalDate dateNaissance, String statutMarital, int dateCanada){
+    public Client(String nomComplet, String email, String password, String numeroTelephone, String infoEmploi, double revenuAnnuel, int credit, LocalDate dateNaissance, String statutMarital, int dateCanada){
         super(nomComplet, email, password, numeroTelephone);
         this.infoEmploi = infoEmploi;
         this.revenuAnnuel = revenuAnnuel;
@@ -22,7 +20,7 @@ public class Client extends User{
         this.dateNaissance = dateNaissance;
         this.statutMarital = statutMarital;
         this.dateCanada = dateCanada;
-    }*/
+    }
     @Override
     public String toString(){
         String info = super.toString();

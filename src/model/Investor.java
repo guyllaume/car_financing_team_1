@@ -1,7 +1,6 @@
 package model;
 
 public class Investor extends User{
-
     private String nomBanque;
     private String detailBancaire;
     private String risque;
@@ -10,14 +9,14 @@ public class Investor extends User{
     public Investor(){
         super();
     }
-    /*public Investor(String nomComplet, String email, String password, String numeroTelephone, String nomBanque,
+    public Investor(String nomComplet, String email, String password, String numeroTelephone, String nomBanque,
                     String detailBancaire, String risque, String education){
         super(nomComplet, email, password, numeroTelephone);
         this.nomBanque = nomBanque;
         this.detailBancaire = detailBancaire;
         this.risque = risque;
         this.education = education;
-    }*/
+    }
 
     @Override
     public String toString(){
@@ -60,4 +59,5 @@ public class Investor extends User{
     public void setEducation(String education) {
         this.education = education;
     }
+
 }
