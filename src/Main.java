@@ -19,6 +19,7 @@ public class Main extends JFrame {
     private LoginView loginView = new LoginView();
     private RegisterView registerView = new RegisterView();
     private FormView formView = new FormView();
+    private StatutView statutView = new StatutView();
     private Client client = new Client();
     private Investor investor = new Investor();
     private FinancingForm financingForm = new FinancingForm();
@@ -26,6 +27,7 @@ public class Main extends JFrame {
     private InvestorRegisterController irController;
     private LoginToAccountController ltaController;
     private FinancingFormRegisterController ffrController;
+    private StatutFormController sfController;
 
     public Main() {
         setTitle("Financement Automobile XYZ");
@@ -74,6 +76,7 @@ public class Main extends JFrame {
         cardPanel.add(loginView, "Login");
         cardPanel.add(registerView, "Register");
         cardPanel.add(formView, "Formulaire");
+        cardPanel.add(statutView, "Statut");
 
         add(cardPanel);
 
@@ -86,17 +89,16 @@ public class Main extends JFrame {
             cardLayout.show(cardPanel, "Main");
         });
         loginView.addRetourALaPagePrincipaleListener(e -> {
-            setSize(600, 400);
+            setSize(600, 500);
             cardLayout.show(cardPanel, "Main");
         });
         formView.addRetourALaPagePrincipaleListener(e -> {
-            setSize(600, 400);
+            setSize(600, 500);
             cardLayout.show(cardPanel, "Main");
         });
-        loginButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                cardLayout.show(cardPanel, "Login");
-            }
+        statutView.addRetourALaPagePrincipaleListener(e -> {
+            setSize(600, 500);
+            cardLayout.show(cardPanel, "Main");
         });
 
         loginButton.addActionListener(e -> cardLayout.show(cardPanel, "Login"));
@@ -111,6 +113,14 @@ public class Main extends JFrame {
         crController = new ClientRegisterController(client, registerView);
         ltaController = new LoginToAccountController(client,investor,cardPanel,cardLayout,loginView);
         ffrController = new FinancingFormRegisterController(client,financingForm,formView);
+        sfController = new StatutFormController();
+
+        statutButton.addActionListener(e -> {
+            sfController.loadFormStatus(client, statutView);
+            cardLayout.show(cardPanel, "Statut");
+        });
+
+
 
     }
 
