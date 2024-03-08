@@ -1,9 +1,12 @@
 import config.PostgresSQLConfig;
 import controller.ClientRegisterController;
+import controller.FinancingFormRegisterController;
 import controller.InvestorRegisterController;
 import controller.LoginToAccountController;
 import model.Client;
+import model.FinancingForm;
 import model.Investor;
+import view.FormView;
 import view.LoginView;
 import view.PictureView;
 import view.RegisterView;
@@ -21,11 +24,14 @@ public class Main extends JFrame {
     private PictureView mainPanel = new PictureView("src/view/Voiture.jpg");
     private LoginView loginView = new LoginView();
     private RegisterView registerView = new RegisterView();
+    private FormView formView = new FormView();
     private Client client = new Client();
     private Investor investor = new Investor();
+    private FinancingForm financingForm = new FinancingForm();
     private ClientRegisterController crController;
     private InvestorRegisterController irController;
     private LoginToAccountController ltaController;
+    private FinancingFormRegisterController ffrController;
 
     public Main() {
         setTitle("Financement Automobile XYZ");
@@ -64,6 +70,7 @@ public class Main extends JFrame {
         cardPanel.add(mainPanel, "Main");
         cardPanel.add(loginView, "Login");
         cardPanel.add(registerView, "Register");
+        cardPanel.add(formView, "Formulaire");
 
         add(cardPanel);
 
@@ -76,6 +83,10 @@ public class Main extends JFrame {
             cardLayout.show(cardPanel, "Main");
         });
         loginView.addRetourALaPagePrincipaleListener(e -> {
+            setSize(600, 400);
+            cardLayout.show(cardPanel, "Main");
+        });
+        formView.addRetourALaPagePrincipaleListener(e -> {
             setSize(600, 400);
             cardLayout.show(cardPanel, "Main");
         });
@@ -96,6 +107,7 @@ public class Main extends JFrame {
         irController = new InvestorRegisterController(investor, registerView);
         crController = new ClientRegisterController(client, registerView);
         ltaController = new LoginToAccountController(client,investor,cardPanel,cardLayout,loginView);
+        ffrController = new FinancingFormRegisterController(client,financingForm,formView);
 
     }
 

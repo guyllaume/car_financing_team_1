@@ -18,8 +18,6 @@ public class LoginToAccountController {
     private Investor investor;
     private InvestorDAOImpl investorDAO;
     private ClientDAOImpl clientDAO;
-    private JPanel cardPanel;
-    private CardLayout cardLayout;
     public LoginToAccountController(Client client, Investor investor, JPanel cardPanel, CardLayout cardLayout, LoginView lv){
         lv.addLoginListener(e -> {
             if (checkIfValidEmail(lv.getUsername())) {
@@ -42,7 +40,7 @@ public class LoginToAccountController {
                             client.setSalt(this.client.getSalt());
                             client.setTelephone(this.client.getTelephone());
                             lv.showErrorMessage("Login Succesfull!!");
-                            //cardLayout.show(cardPanel, "!ToDo!");
+                            cardLayout.show(cardPanel, "Formulaire");
                         } else {
                             lv.showErrorMessage("The password doesn't match the one on the account");
                         }
@@ -66,7 +64,7 @@ public class LoginToAccountController {
                             investor.setSalt(this.investor.getSalt());
                             investor.setTelephone(this.investor.getTelephone());
                             lv.showErrorMessage("Login Succesfull!!");
-                            //cardLayout.show(cardPanel, "!ToDo!");
+                            cardLayout.show(cardPanel, "Formulaire");
                         } else {
                             lv.showErrorMessage("The password doesn't match the one on the account");
                         }
