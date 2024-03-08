@@ -29,6 +29,9 @@ public class InvestorRegisterController {
                     if(!checkIfValidPhoneNumber(infoEntered.get(4)))
                         throw new RuntimeException("Veuillez entre un numero de telephone valide");
 
+                    investorDAO = new InvestorDAOImpl();
+                    if (investorDAO.getInvestorByEmail(infoEntered.get(1).trim()) != null)
+                        throw new RuntimeException("Ce compte existe deja");
                     investor.setNomComplet(infoEntered.get(0).trim());
                     investor.setEmail(infoEntered.get(1).trim());
                     investor.setPassword(infoEntered.get(2).trim());
@@ -38,7 +41,6 @@ public class InvestorRegisterController {
                     investor.setRisque(infoEntered.get(7).trim());
                     investor.setEducation(infoEntered.get(8).trim());
                     investor.createSaltAndHash();
-                    investorDAO = new InvestorDAOImpl();
                     investorDAO.addInvestor(investor);
 
                     rv.setMessage("<html>Votre Inscription c'est fait avec succès!" + investor.toString() + "</html>");

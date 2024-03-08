@@ -53,6 +53,9 @@ public class ClientRegisterController {
                     } catch (NumberFormatException error) {
                         throw new RuntimeException("Entrer une durée(ans) valide");
                     }
+                    clientDao = new ClientDAOImpl();
+                    if (clientDao.getClientByEmail(infoEntered.get(1).trim()) != null)
+                        throw new RuntimeException("Ce compte existe deja");
                     client.setNomComplet(infoEntered.get(0).trim());
                     client.setEmail(infoEntered.get(1).trim());
                     client.setPassword(infoEntered.get(2).trim());
@@ -64,9 +67,7 @@ public class ClientRegisterController {
                     client.setStatutMarital(infoEntered.get(9).trim());
                     client.setDateCanada(castDuree);
                     client.createSaltAndHash();
-                    clientDao = new ClientDAOImpl();
                     clientDao.addClient(client);
-
 
                     rv.setMessage("<html>Votre Inscription c'est fait avec succès!" + client.toString() + "</html>");
                 }
