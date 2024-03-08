@@ -61,6 +61,20 @@ public class PostgresSQLConfig {
                 "(idClient IS NOT NULL AND idInvestor IS NULL)" +
                 ")" +
                 ");";
+        String createTableFinancingForm = "CREATE TABLE IF NOT EXISTS financingForm (" +
+                "id SERIAL PRIMARY KEY," +
+                "marque VARCHAR(255)," +
+                "modele VARCHAR(255)," +
+                "annee INT," +
+                "km INT," +
+                "VIN VARCHAR(255)," +
+                "montantPret DOUBLE PRECISION," +
+                "dureePret INT," +
+                "userId INT," +
+                "CONSTRAINT fk_User_id " +
+                "FOREIGN KEY (userId) " +
+                "REFERENCES users(id)" +
+                ");";
 
         try (Connection conn = connect();
              Statement statement = conn.createStatement()) {
@@ -71,6 +85,8 @@ public class PostgresSQLConfig {
             System.out.println("Table 'investor' created or already exists.");
             statement.execute(createTableUser);
             System.out.println("Table 'user' created or already exists.");
+            statement.execute(createTableFinancingForm);
+            System.out.println("Table 'financingForm' created or already exists.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
