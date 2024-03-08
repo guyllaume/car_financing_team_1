@@ -1,8 +1,10 @@
 package DAO;
 
 import config.PostgresSQLConfig;
+import model.Client;
 import model.FinancingForm;
 import model.Investor;
+import model.User;
 
 import java.sql.*;
 
@@ -33,5 +35,32 @@ public class FinancingFormDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public FinancingForm getFinancingFormByUserID(int userID){
+            String SQL_SELECT = "SELECT * FROM financingform WHERE userid = ?;";
+
+            try (Connection conn = PostgresSQLConfig.connect();
+                 PreparedStatement statement = conn.prepareStatement(SQL_SELECT)) {
+
+                statement.setInt(1, userID);
+                ResultSet resultSet = statement.executeQuery();
+
+                if(resultSet.next()) {
+                    FinancingForm financingForm = new FinancingForm();
+                    financingForm.setUserId(userID);
+                    financingForm.setMarque(resultSet.getString("marque"));
+                    financingForm.setModele(resultSet.getString("modele"));
+                    financingForm.setAnnee(resultSet.getInt("annee"));
+                    financingForm.setKm(resultSet.getInt("km"));
+                    financingForm.setVIN(resultSet.getString("VIN"));
+                    financingForm.setMontantPret(resultSet.getDouble("montantPret"));
+                    financingForm.setDureePret(resultSet.getInt("dureePret"));
+                    return financingForm;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        return null;
     }
 }
