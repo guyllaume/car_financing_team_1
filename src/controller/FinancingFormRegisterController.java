@@ -5,6 +5,8 @@ import model.Client;
 import model.FinancingForm;
 import view.FormView;
 
+import java.time.LocalDate;
+
 public class FinancingFormRegisterController {
     private FinancingFormDAO financingFormDAO;
 
@@ -35,6 +37,8 @@ public class FinancingFormRegisterController {
                 } catch (NumberFormatException error) {
                     throw new RuntimeException("Entrer une duree de pret valide");
                 }
+                if (!checkIfValidAnneeVehicule(castAnnee))
+                    throw new RuntimeException("L'annee de votre vehicule est invalide (1900-" +LocalDate.now().getYear()+")");
                 if (!checkIfValidVin(fv.getVINField()))
                     throw new RuntimeException("Veuillez entrer un VIN valide (17 caractere)");
                 if (!checkIfMontantPretIsValid(castMontantPret))
@@ -71,6 +75,9 @@ public class FinancingFormRegisterController {
 
     private boolean checkIfValidkmAmount(int km) {
         return km >= 0 && km <= 230000;
+    }
+    private boolean checkIfValidAnneeVehicule(int annee) {
+        return annee <= LocalDate.now().getYear()+1 && annee > 1899;
     }
 
     private boolean checkIfAllInfoEntered(FormView fv) {
