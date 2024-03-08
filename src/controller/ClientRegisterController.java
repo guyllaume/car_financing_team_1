@@ -27,6 +27,8 @@ public class ClientRegisterController {
                                 "incluant un caractère spécial, une lettre majuscule, et un chiffre");
                     if (!checkIfPasswordsAreEquals(infoEntered.get(2), infoEntered.get(3)))
                         throw new RuntimeException("Vos mot de passe doit être identique");
+                    if(!checkIfValidPhoneNumber(infoEntered.get(4)))
+                        throw new RuntimeException("Veuillez entre un numero de telephone valide");
 
                     double castRevenu;
                     int castCredit, castDuree;
@@ -54,7 +56,7 @@ public class ClientRegisterController {
                     client.setNomComplet(infoEntered.get(0));
                     client.setEmail(infoEntered.get(1));
                     client.setPassword(infoEntered.get(2));
-                    client.setTelephone(infoEntered.get(4));
+                    client.setTelephone(changeTelephoneToNumbersOnly(infoEntered.get(4)));
                     client.setInfoEmploi(infoEntered.get(5));
                     client.setRevenuAnnuel(castRevenu);
                     client.setCredit(castCredit);
@@ -105,6 +107,7 @@ public class ClientRegisterController {
         return email.contains("@") && (email.contains(".com") || email.contains(".ca"));
     }
     private boolean checkIfValidPhoneNumber(String phone){
-        return true;
+        return changeTelephoneToNumbersOnly(phone).length() == 10;
     }
+    private String changeTelephoneToNumbersOnly(String phone){return phone.replaceAll("\\D", "");}
 }

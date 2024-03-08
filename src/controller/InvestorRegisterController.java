@@ -26,11 +26,13 @@ public class InvestorRegisterController {
                                 "incluant un caractère spécial, une lettre majuscule, et un chiffre");
                     if (!checkIfPasswordsAreEquals(infoEntered.get(2), infoEntered.get(3)))
                         throw new RuntimeException("Vos mot de passe doit être identique");
+                    if(!checkIfValidPhoneNumber(infoEntered.get(4)))
+                        throw new RuntimeException("Veuillez entre un numero de telephone valide");
 
                     investor.setNomComplet(infoEntered.get(0));
                     investor.setEmail(infoEntered.get(1));
                     investor.setPassword(infoEntered.get(2));
-                    investor.setTelephone(infoEntered.get(4));
+                    investor.setTelephone(changeTelephoneToNumbersOnly(infoEntered.get(4)));
                     investor.setNomBanque(infoEntered.get(5));
                     investor.setDetailBancaire(infoEntered.get(6));
                     investor.setRisque(infoEntered.get(7));
@@ -79,6 +81,7 @@ public class InvestorRegisterController {
         return email.contains("@") && (email.contains(".com") || email.contains(".ca"));
     }
     private boolean checkIfValidPhoneNumber(String phone){
-        return true;
+        return changeTelephoneToNumbersOnly(phone).length() == 10;
     }
+    private String changeTelephoneToNumbersOnly(String phone){return phone.replaceAll("\\D", "");}
 }
