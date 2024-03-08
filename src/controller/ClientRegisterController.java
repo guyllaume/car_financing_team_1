@@ -53,15 +53,15 @@ public class ClientRegisterController {
                     } catch (NumberFormatException error) {
                         throw new RuntimeException("Entrer une durée(ans) valide");
                     }
-                    client.setNomComplet(infoEntered.get(0));
-                    client.setEmail(infoEntered.get(1));
-                    client.setPassword(infoEntered.get(2));
-                    client.setTelephone(changeTelephoneToNumbersOnly(infoEntered.get(4)));
-                    client.setInfoEmploi(infoEntered.get(5));
+                    client.setNomComplet(infoEntered.get(0).trim());
+                    client.setEmail(infoEntered.get(1).trim());
+                    client.setPassword(infoEntered.get(2).trim());
+                    client.setTelephone(changeTelephoneToNumbersOnly(infoEntered.get(4).trim()));
+                    client.setInfoEmploi(infoEntered.get(5).trim());
                     client.setRevenuAnnuel(castRevenu);
                     client.setCredit(castCredit);
                     client.setDateNaissance(castDateNaissance);
-                    client.setStatutMarital(infoEntered.get(9));
+                    client.setStatutMarital(infoEntered.get(9).trim());
                     client.setDateCanada(castDuree);
                     client.createSaltAndHash();
                     clientDao = new ClientDAOImpl();

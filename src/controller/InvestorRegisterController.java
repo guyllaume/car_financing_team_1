@@ -29,14 +29,14 @@ public class InvestorRegisterController {
                     if(!checkIfValidPhoneNumber(infoEntered.get(4)))
                         throw new RuntimeException("Veuillez entre un numero de telephone valide");
 
-                    investor.setNomComplet(infoEntered.get(0));
-                    investor.setEmail(infoEntered.get(1));
-                    investor.setPassword(infoEntered.get(2));
-                    investor.setTelephone(changeTelephoneToNumbersOnly(infoEntered.get(4)));
-                    investor.setNomBanque(infoEntered.get(5));
-                    investor.setDetailBancaire(infoEntered.get(6));
-                    investor.setRisque(infoEntered.get(7));
-                    investor.setEducation(infoEntered.get(8));
+                    investor.setNomComplet(infoEntered.get(0).trim());
+                    investor.setEmail(infoEntered.get(1).trim());
+                    investor.setPassword(infoEntered.get(2).trim());
+                    investor.setTelephone(changeTelephoneToNumbersOnly(infoEntered.get(4).trim()));
+                    investor.setNomBanque(infoEntered.get(5).trim());
+                    investor.setDetailBancaire(infoEntered.get(6).trim());
+                    investor.setRisque(infoEntered.get(7).trim());
+                    investor.setEducation(infoEntered.get(8).trim());
                     investor.createSaltAndHash();
                     investorDAO = new InvestorDAOImpl();
                     investorDAO.addInvestor(investor);
