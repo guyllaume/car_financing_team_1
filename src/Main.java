@@ -1,15 +1,9 @@
 import config.PostgresSQLConfig;
-import controller.ClientRegisterController;
-import controller.FinancingFormRegisterController;
-import controller.InvestorRegisterController;
-import controller.LoginToAccountController;
+import controller.*;
 import model.Client;
 import model.FinancingForm;
 import model.Investor;
-import view.FormView;
-import view.LoginView;
-import view.PictureView;
-import view.RegisterView;
+import view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +14,7 @@ public class Main extends JFrame {
     private CardLayout cardLayout = new CardLayout();
     private JPanel cardPanel = new JPanel(cardLayout);
     private JPanel buttonPanel = new JPanel(new FlowLayout());
-    private JPanel centerPanel = new JPanel();
+    private JPanel centerPanel = new JPanel(new GridBagLayout());
     private PictureView mainPanel = new PictureView("src/view/Voiture.jpg");
     private LoginView loginView = new LoginView();
     private RegisterView registerView = new RegisterView();
@@ -38,31 +32,40 @@ public class Main extends JFrame {
         setSize(600, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        GridBagConstraints gbc = new GridBagConstraints();
 
-        JLabel description = new JLabel("<html><br><br><br><br>Financement Automobile XYZ offrent des solutions personnalisées pour l'achat de véhicules neufs ou d'occasion. Ils comprennent des prêts, des options de location et des plans de paiement flexibles pour répondre aux besoins financiers individuels des clients.<br><br> Financement Automobile XYZ fournissent aussi des solutions de prêt et de gestion de fonds pour maximiser les rendements sur les investissements. Ils offrent des prêts sur marge, des lignes de crédit et des conseils financiers pour optimiser les portefeuilles d'investissement.</html>");
+        JLabel description = new JLabel("<html>Financement Automobile XYZ offrent des solutions personnalisées pour l'achat de véhicules neufs ou d'occasion. Ils comprennent des prêts, des options de location et des plans de paiement flexibles pour répondre aux besoins financiers individuels des clients.<br><br> Financement Automobile XYZ fournissent aussi des solutions de prêt et de gestion de fonds pour maximiser les rendements sur les investissements. Ils offrent des prêts sur marge, des lignes de crédit et des conseils financiers pour optimiser les portefeuilles d'investissement.</html>");
         description.setFont(new Font("Arial", Font.PLAIN, 12));
         description.setAlignmentX(CENTER_ALIGNMENT);
         description.setForeground(new Color(0x5B5B5B));
+        description.setPreferredSize(new Dimension(400, 200));
 
         JLabel numeroContact = new JLabel("Numéro téléphone : 450-555-6655");
         numeroContact.setAlignmentX(CENTER_ALIGNMENT);
-        numeroContact.setForeground(new Color(0x5B5B5B));
+        numeroContact.setForeground(new Color(22, 197, 144));
 
         JButton loginButton = new JButton("Connexion");
         JButton registerButton = new JButton("Inscription");
+        JButton statutButton = new JButton("Statut du Financement");
 
         buttonPanel.add(loginButton);
         buttonPanel.add(registerButton);
         buttonPanel.setOpaque(false);
+        buttonPanel.setMaximumSize(new Dimension(200, 50));
 
-        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
-        centerPanel.add(description);
-        centerPanel.add(Box.createVerticalStrut(20));
-        centerPanel.add(numeroContact);
-        centerPanel.add(Box.createVerticalStrut(20));
-        centerPanel.add(buttonPanel);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        centerPanel.add(description, gbc);
+        gbc.gridy = 1;
+        centerPanel.add(numeroContact, gbc);
+        gbc.gridy = 2;
+        centerPanel.add(buttonPanel, gbc);
+        gbc.gridy = 3;
+        centerPanel.add(statutButton, gbc);
+        gbc.gridy = 4; // Adjust as needed
+        gbc.weighty = 1.0; // Add vertical space
+        centerPanel.add(Box.createVerticalGlue(), gbc);
         centerPanel.setOpaque(false);
-        centerPanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20)); // Add spacing
 
         mainPanel.setLayout(new BorderLayout());
         mainPanel.add(centerPanel, BorderLayout.CENTER);
@@ -96,12 +99,12 @@ public class Main extends JFrame {
             }
         });
 
-        registerButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                pack();
-                setSize(800, getHeight()+25);
-                cardLayout.show(cardPanel, "Register");
-            }
+        loginButton.addActionListener(e -> cardLayout.show(cardPanel, "Login"));
+
+        registerButton.addActionListener(e -> {
+            pack();
+            setSize(800, getHeight()+25);
+            cardLayout.show(cardPanel, "Register");
         });
 
         irController = new InvestorRegisterController(investor, registerView);
