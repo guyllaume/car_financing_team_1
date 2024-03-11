@@ -116,8 +116,9 @@ public class Main extends JFrame {
         sfController = new StatutFormController();
 
         statutButton.addActionListener(e -> {
-            sfController.loadFormStatus(client, statutView);
-            cardLayout.show(cardPanel, "Statut");
+            if(sfController.loadFormStatus(client, statutView)) {
+                cardLayout.show(cardPanel, "Statut");
+            }
         });
 
 
