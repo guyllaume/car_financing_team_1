@@ -9,19 +9,21 @@ public class StatutFormController {
     private FinancingFormDAO financingFormDAO = new FinancingFormDAO();
     private FinancingForm financingForm;
     public StatutFormController(){}
-    public void loadFormStatus(Client client, StatutView sv){
+    public boolean loadFormStatus(Client client, StatutView sv){
         if(verifyConnection(client)){
             if (getFormFromDao(client)){
                 sv.setMarque(financingForm.getMarque());
                 sv.setModel(financingForm.getModele());
                 sv.setAnnee(String.valueOf(financingForm.getAnnee()));
                 sv.setKm(String.valueOf(financingForm.getKm()));
+                return true;
             }else {
                 sv.setMessageError("No Financing form found");
             }
         }else{
             sv.setMessageError("No account connected to the application");
         }
+        return false;
     }
 
     private boolean verifyConnection(Client client){
