@@ -3,18 +3,20 @@ package model;
 import java.util.List;
 
 public class InvestorForm {
-    private List<String> transactions;
+    private int id;
+    private List<Transaction> transactions;
     private double solde;
     private int userId;
 
-    public InvestorForm(){
+    public InvestorForm() {
 
     }
-    public List<String> getTransactions() {
+
+    public List<Transaction> getTransactions() {
         return transactions;
     }
 
-    public void setTransactions(List<String> transactions) {
+    public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
     }
 
@@ -33,4 +35,13 @@ public class InvestorForm {
     public void setUserId(int userId) {
         this.userId = userId;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
 }
