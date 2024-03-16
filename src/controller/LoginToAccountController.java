@@ -57,7 +57,9 @@ public class LoginToAccountController {
                             investor.setRisque(this.investor.getRisque());
                             investor.setEducation(this.investor.getEducation());
                             investor.setNomBanque(this.investor.getNomBanque());
-                            investor.setDetailBancaire(this.investor.getDetailBancaire());
+                            investor.setNbInstitution(this.investor.getNbInstitution());
+                            investor.setNbTransit(this.investor.getNbTransit());
+                            investor.setNbCompte(this.investor.getNbCompte());
                             investor.setNomComplet(this.investor.getNomComplet());
                             investor.setEmail(this.investor.getEmail());
                             investor.setPassword(this.investor.getPassword());

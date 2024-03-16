@@ -14,16 +14,18 @@ public class InvestorDAOImpl extends UserDAOImpl {
     }
 
     public void addInvestor(Investor investor) {
-        String SQL_INSERT = "INSERT INTO investor (nomBanque, detailBancaire, risque, education) VALUES (?, ?, ?, ?)";
+        String SQL_INSERT = "INSERT INTO investor (nomBanque, nbInstitution, nbTransit, nbCompte, risque, education) VALUES (?, ?, ?, ?, ?, ?)";
         String SQL_INSERT2 = "INSERT INTO users (idInvestor, nomComplet, email, password, salt, telephone) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = PostgresSQLConfig.connect();
              PreparedStatement statement = conn.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, investor.getNomBanque());
-            statement.setString(2, investor.getDetailBancaire());
-            statement.setString(3, investor.getRisque());
-            statement.setString(4, investor.getEducation());
+            statement.setInt(2, investor.getNbInstitution());
+            statement.setInt(3, investor.getNbTransit());
+            statement.setInt(4, investor.getNbCompte());
+            statement.setString(5, investor.getRisque());
+            statement.setString(6, investor.getEducation());
 
             int affectedRows = statement.executeUpdate();
 
@@ -87,11 +89,13 @@ public class InvestorDAOImpl extends UserDAOImpl {
                 if(resultSet.next()) {
                     int id = resultSet.getInt("id");
                     String nomBanque = resultSet.getString("nomBanque");
-                    String detailBancaire = resultSet.getString("detailBancaire");
+                    int nbInstitution = resultSet.getInt("nbInstitution");
+                    int nbTransit = resultSet.getInt("nbTransit");
+                    int nbCompte = resultSet.getInt("nbCompte");
                     String risque = resultSet.getString("risque");
                     String education = resultSet.getString("education");
 
-                    investor = new Investor(user.getNomComplet(), user.getEmail(), user.getPassword(), user.getTelephone(), nomBanque, detailBancaire, risque, education);
+                    investor = new Investor(user.getNomComplet(), user.getEmail(), user.getPassword(), user.getTelephone(), nomBanque, nbInstitution, nbTransit, nbCompte, risque, education);
                     investor.setId(user.getId());
                     investor.setInvestorId(id);
                     investor.setSalt(user.getSalt());

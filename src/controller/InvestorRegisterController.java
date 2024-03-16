@@ -6,6 +6,8 @@ import error.NotSelectedOption;
 import model.Investor;
 import view.RegisterView;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 public class InvestorRegisterController {
@@ -29,6 +31,29 @@ public class InvestorRegisterController {
                     if(!checkIfValidPhoneNumber(infoEntered.get(4)))
                         throw new RuntimeException("Veuillez entre un numero de telephone valide");
 
+                    int castNbInstitution, castNbTransit, castNbCompte;
+                    try {
+                        castNbInstitution = Integer.parseInt(infoEntered.get(6));
+                    } catch (NumberFormatException error) {
+                        throw new RuntimeException("Entrer un numero d'institution valide");
+                    }
+                    try {
+                        castNbTransit = Integer.parseInt(infoEntered.get(7));
+                    } catch (NumberFormatException error) {
+                        throw new RuntimeException("Entrer un numero de transit valide");
+                    }
+                    try {
+                        castNbCompte = Integer.parseInt(infoEntered.get(8));
+                    } catch (NumberFormatException error) {
+                        throw new RuntimeException("Entrer un numero de compte valide");
+                    }
+                    if(String.valueOf(castNbInstitution).length() != 3)
+                        throw new RuntimeException("Veuillez entrer un numero d'institution valide (xxx)");
+                    if(String.valueOf(castNbTransit).length() != 5)
+                        throw new RuntimeException("Veuillez entrer un numero de transit valide (xxxxx)");
+                    if(String.valueOf(castNbCompte).length() > 11 || castNbCompte == 0)
+                        throw new RuntimeException("Veuillez entrer un numero de compte valide (entre 1 et 11 chiffre)");
+
                     investorDAO = new InvestorDAOImpl();
                     if (investorDAO.getInvestorByEmail(infoEntered.get(1).trim()) != null)
                         throw new RuntimeException("Ce compte existe deja");
@@ -37,9 +62,11 @@ public class InvestorRegisterController {
                     investor.setPassword(infoEntered.get(2).trim());
                     investor.setTelephone(changeTelephoneToNumbersOnly(infoEntered.get(4).trim()));
                     investor.setNomBanque(infoEntered.get(5).trim());
-                    investor.setDetailBancaire(infoEntered.get(6).trim());
-                    investor.setRisque(infoEntered.get(7).trim());
-                    investor.setEducation(infoEntered.get(8).trim());
+                    investor.setNbInstitution(castNbInstitution);
+                    investor.setNbTransit(castNbTransit);
+                    investor.setNbCompte(castNbCompte);
+                    investor.setRisque(infoEntered.get(9).trim());
+                    investor.setEducation(infoEntered.get(10).trim());
                     investor.createSaltAndHash();
                     investorDAO.addInvestor(investor);
 
