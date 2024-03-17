@@ -2,18 +2,21 @@ package model;
 
 public class Investor extends User{
     private String nomBanque;
-    private String detailBancaire;
+    private int nbInstitution;
+    private int nbTransit;
+    private int nbCompte;
     private String risque;
     private String education;
 
     public Investor(){
         super();
     }
-    public Investor(String nomComplet, String email, String password, String numeroTelephone, String nomBanque,
-                    String detailBancaire, String risque, String education){
+    public Investor(String nomComplet, String email, String password, String numeroTelephone, String nomBanque, int nbInstitution, int nbTransit, int nbCompte, String risque, String education){
         super(nomComplet, email, password, numeroTelephone);
         this.nomBanque = nomBanque;
-        this.detailBancaire = detailBancaire;
+        this.nbInstitution = nbInstitution;
+        this.nbTransit = nbTransit;
+        this.nbCompte = nbCompte;
         this.risque = risque;
         this.education = education;
     }
@@ -22,7 +25,9 @@ public class Investor extends User{
     public String toString(){
         String info = super.toString();
         info += "<br>Nom de Votre Banque : " + nomBanque
-                + "<br>Vos détails bancaire : " + detailBancaire
+                + "<br>Votre numéro d'Institution bancaire : " + nbInstitution
+                + "<br>Votre numéro de transit : " + nbTransit
+                + "<br>Votre numéro de compte bancaire : " + nbCompte
                 + "<br>Votre niveau de risque : " + risque
                 + "<br>Votre niveau d'éducation comme investisseur : " + education;
         return info;
@@ -36,13 +41,6 @@ public class Investor extends User{
         this.nomBanque = nomBanque;
     }
 
-    public String getDetailBancaire() {
-        return detailBancaire;
-    }
-
-    public void setDetailBancaire(String detailBancaire) {
-        this.detailBancaire = detailBancaire;
-    }
 
     public String getRisque() {
         return risque;
@@ -58,6 +56,30 @@ public class Investor extends User{
 
     public void setEducation(String education) {
         this.education = education;
+    }
+
+    public int getNbInstitution() {
+        return nbInstitution;
+    }
+
+    public void setNbInstitution(int nbInstitution) {
+        this.nbInstitution = nbInstitution;
+    }
+
+    public int getNbTransit() {
+        return nbTransit;
+    }
+
+    public void setNbTransit(int nbTransit) {
+        this.nbTransit = nbTransit;
+    }
+
+    public int getNbCompte() {
+        return nbCompte;
+    }
+
+    public void setNbCompte(int nbCompte) {
+        this.nbCompte = nbCompte;
     }
 
 }

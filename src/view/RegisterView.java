@@ -34,13 +34,15 @@ public class RegisterView extends PictureView {
     private JComboBox<String> monthComboBox;
     private JComboBox<Integer> yearComboBox;
     private ButtonGroup buttonGroupMarital;
-    private JTextArea detailEmploiTA;
+    private JTextField numeroInstitution;
+    private JTextField numeroTransit;
+    private JTextField numeroCompte;
     private JTextField revenuAnnuel;
     private JTextField noteCredit;
     private JTextField dureeCanada;
     private ButtonGroup buttonGroupRisque;
     private ButtonGroup buttonGroupEducation;
-    private JTextArea detailBancaireTA;
+    private JTextArea detailEmploiTA;
     private JTextField nomBanque;
     private JLabel registeredMessage;
     private JRadioButton optionCelibataire;
@@ -264,25 +266,38 @@ public class RegisterView extends PictureView {
 
         //Ajout des composants de westInvestorPanel
 
-        detailBancaireTA = new JTextArea(2,15);
-        detailBancaireTA.setLineWrap(true);
-        detailBancaireTA.setWrapStyleWord(true);
+        numeroInstitution = new JTextField(15);
+        numeroInstitution.setBorder(null);
+        numeroInstitution.setPreferredSize(new Dimension(0,22));
+        numeroInstitution.setBackground(new Color(238, 238, 238));
+        numeroTransit = new JTextField(15);
+        numeroTransit.setBorder(null);
+        numeroTransit.setPreferredSize(new Dimension(0,22));
+        numeroTransit.setBackground(new Color(238, 238, 238));
+        numeroCompte = new JTextField(15);
+        numeroCompte.setBorder(null);
+        numeroCompte.setPreferredSize(new Dimension(0,22));
+        numeroCompte.setBackground(new Color(238, 238, 238));
         nomBanque = new JTextField(15);
         nomBanque.setBorder(null);
         nomBanque.setPreferredSize(new Dimension(0,22));
         nomBanque.setBackground(new Color(238, 238, 238));
         List<JPanel> investorRows = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 6; i++) {
             investorRows.add(new JPanel(new FlowLayout(FlowLayout.LEFT)));
         }
         investorRows.get(0).add(new JLabel("<html><body style='width: 100px'>Nom de votre banque :"));
         investorRows.get(0).add(nomBanque);
-        investorRows.get(1).add(new JLabel("<html><body style='width: 100px'>Détails bancaires :"));
-        investorRows.get(1).add(detailBancaireTA);
-        investorRows.get(2).add(new JLabel("<html><body style='width: 100px'>Niveau de risque souhaité :"));
-        investorRows.get(2).add(niveauRisquePanel);
-        investorRows.get(3).add(new JLabel("<html><body style='width: 100px'>Niveau d'éducation en invesstissement :"));
-        investorRows.get(3).add(niveauEducPanel);
+        investorRows.get(1).add(new JLabel("<html><body style='width: 100px'>Numéro d'instituion :"));
+        investorRows.get(1).add(numeroInstitution);
+        investorRows.get(2).add(new JLabel("<html><body style='width: 100px'>Numéro de transit :"));
+        investorRows.get(2).add(numeroTransit);
+        investorRows.get(3).add(new JLabel("<html><body style='width: 100px'>Numéro de compte :"));
+        investorRows.get(3).add(numeroCompte);
+        investorRows.get(4).add(new JLabel("<html><body style='width: 100px'>Niveau de risque souhaité :"));
+        investorRows.get(4).add(niveauRisquePanel);
+        investorRows.get(5).add(new JLabel("<html><body style='width: 100px'>Niveau d'éducation en invesstissement :"));
+        investorRows.get(5).add(niveauEducPanel);
 
         for(JPanel investortRow : investorRows){
             eastInvestorPanel.add(investortRow);
@@ -408,7 +423,9 @@ public class RegisterView extends PictureView {
         JRadioButton jrbSelected;
         List<String> investorInfos = new ArrayList<>(getUserInfo());
         investorInfos.add(nomBanque.getText());
-        investorInfos.add(detailBancaireTA.getText());
+        investorInfos.add(numeroInstitution.getText());
+        investorInfos.add(numeroTransit.getText());
+        investorInfos.add(numeroCompte.getText());
 
         if (optionPeuRisque.isSelected())
             jrbSelected = optionPeuRisque;
