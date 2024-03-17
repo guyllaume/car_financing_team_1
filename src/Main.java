@@ -20,6 +20,9 @@ public class Main extends JFrame {
     private RegisterView registerView = new RegisterView();
     private FormView formView = new FormView();
     private StatutView statutView = new StatutView();
+    private InvestorAccountView investorAccountView = new InvestorAccountView();
+    private DepositView depositView = new DepositView();
+    private WithdrawlView withdrawlView = new WithdrawlView();
     private Client client = new Client();
     private Investor investor = new Investor();
     private FinancingForm financingForm = new FinancingForm();
@@ -64,8 +67,8 @@ public class Main extends JFrame {
         centerPanel.add(buttonPanel, gbc);
         gbc.gridy = 3;
         centerPanel.add(statutButton, gbc);
-        gbc.gridy = 4; // Adjust as needed
-        gbc.weighty = 1.0; // Add vertical space
+        gbc.gridy = 4;
+        gbc.weighty = 1.0;
         centerPanel.add(Box.createVerticalGlue(), gbc);
         centerPanel.setOpaque(false);
 
@@ -77,6 +80,9 @@ public class Main extends JFrame {
         cardPanel.add(registerView, "Register");
         cardPanel.add(formView, "Formulaire");
         cardPanel.add(statutView, "Statut");
+        cardPanel.add(investorAccountView, "InvestorAccount");
+        cardPanel.add(depositView, "Deposit");
+        cardPanel.add(withdrawlView, "Withdrawl");
 
         add(cardPanel);
 
@@ -100,6 +106,18 @@ public class Main extends JFrame {
             setSize(600, 500);
             cardLayout.show(cardPanel, "Main");
         });
+        investorAccountView.addRetourALaPagePrincipaleListener(e -> {
+            setSize(600, 500);
+            cardLayout.show(cardPanel, "Main");
+        });
+        depositView.addRetourALaPageInvestorAccountListener(e -> {
+            setSize(600, 500);
+            cardLayout.show(cardPanel, "InvestorAccount");
+        });
+        withdrawlView.addRetourALaPageInvestorAccountListener(e -> {
+            setSize(600, 500);
+            cardLayout.show(cardPanel, "InvestorAccount");
+        });
 
         loginButton.addActionListener(e -> cardLayout.show(cardPanel, "Login"));
 
@@ -120,8 +138,6 @@ public class Main extends JFrame {
                 cardLayout.show(cardPanel, "Statut");
             }
         });
-
-
 
     }
 
