@@ -1,6 +1,8 @@
 package model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class Transaction {
     private int id;
@@ -11,6 +13,15 @@ public class Transaction {
 
     public Transaction() {
 
+    }
+    public String toString() {
+        String info = "";
+        info += type + montant + "le " + totLongForm();
+        return info;
+    }
+    private String totLongForm(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.CANADA_FRENCH);
+        return timeOfTransaction.format(formatter);
     }
     public int getId() {
         return id;

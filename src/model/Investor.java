@@ -1,6 +1,6 @@
 package model;
 
-public class Investor extends User{
+public class Investor extends User {
     private String nomBanque;
     private int nbInstitution;
     private int nbTransit;
@@ -8,10 +8,11 @@ public class Investor extends User{
     private String risque;
     private String education;
 
-    public Investor(){
+    public Investor() {
         super();
     }
-    public Investor(String nomComplet, String email, String password, String numeroTelephone, String nomBanque, int nbInstitution, int nbTransit, int nbCompte, String risque, String education){
+
+    public Investor(String nomComplet, String email, String password, String numeroTelephone, String nomBanque, int nbInstitution, int nbTransit, int nbCompte, String risque, String education) {
         super(nomComplet, email, password, numeroTelephone);
         this.nomBanque = nomBanque;
         this.nbInstitution = nbInstitution;
@@ -22,8 +23,19 @@ public class Investor extends User{
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         String info = super.toString();
+        info += "<br>Nom de Votre Banque : " + nomBanque
+                + "<br>Votre numéro d'Institution bancaire : " + nbInstitution
+                + "<br>Votre numéro de transit : " + nbTransit
+                + "<br>Votre numéro de compte bancaire : " + nbCompte
+                + "<br>Votre niveau de risque : " + risque
+                + "<br>Votre niveau d'éducation comme investisseur : " + education;
+        return info;
+    }
+
+    public String toStringInvestorOnly() {
+        String info = "";
         info += "<br>Nom de Votre Banque : " + nomBanque
                 + "<br>Votre numéro d'Institution bancaire : " + nbInstitution
                 + "<br>Votre numéro de transit : " + nbTransit
