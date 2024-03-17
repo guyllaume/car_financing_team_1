@@ -13,15 +13,8 @@ public class PostgresSQLConfig {
     public static Connection connect() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
-
     // Method to initialize the database by creating necessary tables
     public static void initializeDatabase() {
-        /*String createTableSQL = "CREATE TABLE IF NOT EXISTS person (" +
-                "id SERIAL PRIMARY KEY," +
-                "name VARCHAR(255)," +
-                "age INT" +
-                ");";
-                no need for a person table*/
         String createTableClient = "CREATE TABLE IF NOT EXISTS client (" +
                 "id SERIAL PRIMARY KEY," +
                 "infoEmploi VARCHAR(255)," +
@@ -34,7 +27,9 @@ public class PostgresSQLConfig {
         String createTableInvestor = "CREATE TABLE IF NOT EXISTS investor (" +
                 "id SERIAL PRIMARY KEY," +
                 "nomBanque VARCHAR(255)," +
-                "detailBancaire VARCHAR(255)," +
+                "nbInstitution INT," +
+                "nbTransit INT," +
+                "nbCompte INT," +
                 "risque VARCHAR(50)," +
                 "education VARCHAR(50)" +
                 ");";
@@ -75,6 +70,44 @@ public class PostgresSQLConfig {
                 "FOREIGN KEY (userId) " +
                 "REFERENCES users(id)" +
                 ");";
+        String createTableCompteInvestor = "CREATE TABLE IF NOT EXISTS compteInvestor (" +
+                "id SERIAL PRIMARY KEY," +
+                "solde DOUBLE PRECISION," +
+                "userId INT," +
+                "CONSTRAINT fk_User_id " +
+                "FOREIGN KEY (userId) " +
+                "REFERENCES users(id)" +
+                ");";
+        String createTableTransactions = "CREATE TABLE IF NOT EXISTS transactions (" +
+                "id SERIAL PRIMARY KEY," +
+                "type VARCHAR(20)," +
+                "dateTransactions DATE," +
+                "montant DOUBLE PRECISION," +
+                "compteInvestorId INT," +
+                "CONSTRAINT fk_compteInvestor_id " +
+                "FOREIGN KEY (compteInvestorId) " +
+                "REFERENCES compteInvestor(id)" +
+                ");";
+        String createFunctionToCalculateSolde = "CREATE OR REPLACE FUNCTION updateSolde() " +
+                "RETURNS TRIGGER AS $$ " +
+                "DECLARE " +
+                "totalMontantTransactions DOUBLE PRECISION;" +
+                "BEGIN " +
+                "SELECT SUM(montant) INTO totalMontantTransactions " +
+                "FROM transactions " +
+                "WHERE compteInvestorId = NEW.compteInvestorId;" + // a changer les id
+                "UPDATE compteInvestor " +
+                "SET solde = totalMontantTransactions " +
+                "WHERE id = NEW.compteInvestorId;" + //a changer les id
+                "RETURN NULL;" +
+                "END; " +
+                "$$ LANGUAGE plpgsql;";
+        String dropTrigger = "DROP TRIGGER IF EXISTS triggerUpdateSolde ON transactions;";
+        String createTriggerTransactions = "CREATE TRIGGER triggerUpdateSolde " +
+                "AFTER INSERT OR UPDATE ON Transactions " +
+                "FOR EACH ROW " +
+                "EXECUTE FUNCTION updateSolde();";
+
 
         try (Connection conn = connect();
              Statement statement = conn.createStatement()) {
@@ -87,6 +120,15 @@ public class PostgresSQLConfig {
             System.out.println("Table 'user' created or already exists.");
             statement.execute(createTableFinancingForm);
             System.out.println("Table 'financingForm' created or already exists.");
+            statement.execute(createTableCompteInvestor);
+            System.out.println("Table 'compteInvestor' created or already exists.");
+            statement.execute(createTableTransactions);
+            System.out.println("Table 'transactions' created or already exists.");
+            statement.execute(createFunctionToCalculateSolde);
+            System.out.println("Function 'updateSolde' created or replaced succesfully");
+            statement.execute(dropTrigger);
+            statement.execute(createTriggerTransactions);
+            System.out.println("Trigger 'triggerUpdateSolde' created or already exists.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
