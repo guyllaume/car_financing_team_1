@@ -3,6 +3,7 @@ import controller.*;
 import model.Client;
 import model.FinancingForm;
 import model.Investor;
+import model.InvestorForm;
 import view.*;
 
 import javax.swing.*;
@@ -26,11 +27,15 @@ public class Main extends JFrame {
     private Client client = new Client();
     private Investor investor = new Investor();
     private FinancingForm financingForm = new FinancingForm();
+    private InvestorForm investorForm  = new InvestorForm();
     private ClientRegisterController crController;
     private InvestorRegisterController irController;
     private LoginToAccountController ltaController;
     private FinancingFormRegisterController ffrController;
     private StatutFormController sfController;
+    private InvestorAccountController iaController;
+    private DepositController dController;
+    private WithdrawlController wController;
 
     public Main() {
         setTitle("Financement Automobile XYZ");
@@ -95,15 +100,12 @@ public class Main extends JFrame {
             cardLayout.show(cardPanel, "Main");
         });
         loginView.addRetourALaPagePrincipaleListener(e -> {
-            setSize(600, 500);
             cardLayout.show(cardPanel, "Main");
         });
         formView.addRetourALaPagePrincipaleListener(e -> {
-            setSize(600, 500);
             cardLayout.show(cardPanel, "Main");
         });
         statutView.addRetourALaPagePrincipaleListener(e -> {
-            setSize(600, 500);
             cardLayout.show(cardPanel, "Main");
         });
         investorAccountView.addRetourALaPagePrincipaleListener(e -> {
@@ -111,11 +113,13 @@ public class Main extends JFrame {
             cardLayout.show(cardPanel, "Main");
         });
         depositView.addRetourALaPageInvestorAccountListener(e -> {
-            setSize(600, 500);
+            setSize(600, 600);
+            iaController.loadOrCreateInvestorAccount(investorAccountView, investor, investorForm);
             cardLayout.show(cardPanel, "InvestorAccount");
         });
         withdrawlView.addRetourALaPageInvestorAccountListener(e -> {
-            setSize(600, 500);
+            setSize(600, 600);
+            iaController.loadOrCreateInvestorAccount(investorAccountView, investor, investorForm);
             cardLayout.show(cardPanel, "InvestorAccount");
         });
 
@@ -129,9 +133,40 @@ public class Main extends JFrame {
 
         irController = new InvestorRegisterController(investor, registerView);
         crController = new ClientRegisterController(client, registerView);
-        ltaController = new LoginToAccountController(client,investor,cardPanel,cardLayout,loginView);
+        ltaController = new LoginToAccountController(client,investor,loginView);
         ffrController = new FinancingFormRegisterController(client,financingForm,formView);
         sfController = new StatutFormController();
+        iaController = new InvestorAccountController();
+        dController = new DepositController(depositView, investorForm);
+        wController = new WithdrawlController(withdrawlView, investorForm);
+
+        investorAccountView.addInvestirListener(e -> {
+            dController.loadDepositInfo(depositView, investor);
+            cardLayout.show(cardPanel, "Deposit");
+        });
+        investorAccountView.addRetirerListener(e -> {
+            wController.loadSolde(withdrawlView, investorForm);
+            cardLayout.show(cardPanel, "Withdrawl");
+        });
+        loginView.addLoginListener(e -> {
+            if (ltaController.getAccountTypeConnected().equals("client"))
+                cardLayout.show(cardPanel, "Formulaire");
+            if (ltaController.getAccountTypeConnected().equals("investor")) {
+                setSize(600, 600);
+                iaController.loadOrCreateInvestorAccount(investorAccountView, investor, investorForm);
+                cardLayout.show(cardPanel, "InvestorAccount");
+            }
+        }, 1);
+        withdrawlView.addRetirerListener(e -> {
+            setSize(600, 600);
+            iaController.loadOrCreateInvestorAccount(investorAccountView, investor, investorForm);
+            cardLayout.show(cardPanel, "InvestorAccount");
+        },1);
+        depositView.addInvestirListener(e -> {
+            setSize(600, 600);
+            iaController.loadOrCreateInvestorAccount(investorAccountView, investor, investorForm);
+            cardLayout.show(cardPanel, "InvestorAccount");
+        },1);
 
         statutButton.addActionListener(e -> {
             if(sfController.loadFormStatus(client, statutView)) {
