@@ -43,5 +43,16 @@ public class InvestorForm {
     public void setId(int id) {
         this.id = id;
     }
+    public double getMontantInvesti(){
+        double montantTotal = 0;
+        if (this.transactions != null) {
+            for (Transaction transaction : transactions) {
+                if (transaction.getType().equals("deposit")) {
+                    montantTotal += transaction.getMontant();
+                }
+            }
+        }
+        return montantTotal;
+    }
 
 }
