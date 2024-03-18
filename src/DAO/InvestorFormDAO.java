@@ -13,7 +13,7 @@ public class InvestorFormDAO {
     public InvestorFormDAO(){}
 
     public InvestorForm getInvestorAccount(int userId){
-        String SQL_SELECT = "SELECT * FROM financingform WHERE userid = ?;";
+        String SQL_SELECT = "SELECT * FROM compteInvestor WHERE userId = ?;";
 
         try (Connection conn = PostgresSQLConfig.connect();
              PreparedStatement statement = conn.prepareStatement(SQL_SELECT)) {
@@ -40,7 +40,7 @@ public class InvestorFormDAO {
         try (Connection conn = PostgresSQLConfig.connect();
              PreparedStatement statement = conn.prepareStatement(SQL_INSERT)) {
 
-            statement.setInt(1, 0);
+            statement.setDouble(1, 0);
             statement.setInt(2, userId);
 
             int affectedRows = statement.executeUpdate();
