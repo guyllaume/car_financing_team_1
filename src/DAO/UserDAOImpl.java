@@ -22,7 +22,7 @@ public class UserDAOImpl implements UserDAO{
             statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
 
-            while (resultSet.next()) {
+            if(resultSet.next()) {
                 int id = resultSet.getInt("id");
                 int clientId = resultSet.getInt("idClient");
                 int investorId = resultSet.getInt("idInvestor");
@@ -38,14 +38,14 @@ public class UserDAOImpl implements UserDAO{
                 user.setInvestorId(investorId);
                 user.setSalt(salt);
                 user.setPassword(password);
-
+                return user;
             }
 
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return user;
+        return null;
     }
     public void addUser(User user) {
         //Will be done through Client or Investor
