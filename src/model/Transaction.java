@@ -1,5 +1,6 @@
 package model;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -11,17 +12,17 @@ public class Transaction {
     private double montant;
     private int compteInvestorId;
 
-    public Transaction() {
-
-    }
+    public Transaction() {}
+    @Override
     public String toString() {
-        String info = "";
-        info += type + montant + "le " + totLongForm();
-        return info;
+        return typeToFrench() + new DecimalFormat("0.00").format(montant) + "$ le " + totLongForm();
     }
     private String totLongForm(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.CANADA_FRENCH);
         return timeOfTransaction.format(formatter);
+    }
+    private String typeToFrench(){
+        return type.equals("deposit") ? "Investi " : "Retiré ";
     }
     public int getId() {
         return id;

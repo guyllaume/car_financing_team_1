@@ -55,7 +55,7 @@ public class InvestorRegisterController {
                         throw new RuntimeException("Veuillez entrer un numero de compte valide (entre 1 et 11 chiffre)");
 
                     investorDAO = new InvestorDAOImpl();
-                    if (investorDAO.getInvestorByEmail(infoEntered.get(1).trim()) != null)
+                    if (investorDAO.getUserByEmail(infoEntered.get(1).trim()) != null)
                         throw new RuntimeException("Ce compte existe deja");
                     investor.setNomComplet(infoEntered.get(0).trim());
                     investor.setEmail(infoEntered.get(1).trim());

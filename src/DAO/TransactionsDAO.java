@@ -35,7 +35,8 @@ public class TransactionsDAO {
         return null;
     }
 
-    public List<Transaction> getDepositTransactions(int investorAccountId){
+    //Inutile
+    /*public List<Transaction> getDepositTransactions(int investorAccountId){
         String SQL_SELECT = "SELECT * FROM transactions WHERE compteinvestorid = ? AND type = 'Investi';";
 
         try (Connection conn = PostgresSQLConfig.connect();
@@ -58,7 +59,7 @@ public class TransactionsDAO {
             e.printStackTrace();
         }
         return null;
-    }
+    }*/
 
     public void addTransactions(Transaction transaction){
         String SQL_INSERT = "INSERT INTO transactions (type, dateTransactions, montant, compteInvestorId) VALUES (?, ?, ?, ?)";

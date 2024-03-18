@@ -58,6 +58,7 @@ public class ClientDAOImpl extends UserDAOImpl{
         }
     }
 
+    //Inutile
     public Client getClientByEmail(String email){
         User user = super.getUserByEmail(email);
         if (user.getClientId() != 0){

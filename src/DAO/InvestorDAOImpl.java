@@ -74,6 +74,7 @@ public class InvestorDAOImpl extends UserDAOImpl {
             e.printStackTrace();
         }
     }
+    //Inutile
     public Investor getInvestorByEmail(String email){
         User user = super.getUserByEmail(email);
         if (user.getInvestorId() != 0){

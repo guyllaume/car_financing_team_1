@@ -1,5 +1,7 @@
 package view;
 
+import service.EventNotifierButton;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -11,7 +13,7 @@ public class LoginView extends PictureView {
     private JTextField usernameField;
     private JLabel passwordLabel;
     private JPasswordField passwordField;
-    private JButton loginButton;
+    private EventNotifierButton loginButton;
     private JComboBox userTypeJCB;
     private GridBagConstraints gbc;
 
@@ -52,7 +54,7 @@ public class LoginView extends PictureView {
         add(userTypeJCB, gbc);
         gbc.gridwidth = 1;
 
-        loginButton = new JButton("Login");
+        loginButton = new EventNotifierButton("Login");
         gbc.gridx = 0;
         gbc.gridy = 3;
         add(loginButton, gbc);
@@ -69,8 +71,8 @@ public class LoginView extends PictureView {
         btnRetour.addActionListener(listener);
     }
 
-    public void addLoginListener(ActionListener listener) {
-        loginButton.addActionListener(listener);
+    public void addLoginListener(ActionListener listener, int priority) {
+        loginButton.addCustomActionListener(listener, priority);
     }
 
     public String getUsername() {
