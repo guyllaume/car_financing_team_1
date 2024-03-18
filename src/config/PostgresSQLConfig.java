@@ -91,20 +91,24 @@ public class PostgresSQLConfig {
         String createFunctionToCalculateSolde = "CREATE OR REPLACE FUNCTION updateSolde() " +
                 "RETURNS TRIGGER AS $$ " +
                 "DECLARE " +
-                "totalMontantTransactions DOUBLE PRECISION;" +
+                "totalMontantDeposer DOUBLE PRECISION;" +
+                "totalMontantRetirer DOUBLE PRECISION;" +
                 "BEGIN " +
-                "SELECT SUM(montant) INTO totalMontantTransactions " +
+                "SELECT SUM(montant) INTO totalMontantDeposer " +
                 "FROM transactions " +
-                "WHERE compteInvestorId = NEW.compteInvestorId;" + // a changer les id
+                "WHERE compteInvestorId = NEW.compteInvestorId AND type = 'deposit';" +
+                "SELECT SUM(montant) INTO totalMontantRetirer " +
+                "FROM transactions " +
+                "WHERE compteInvestorId = NEW.compteInvestorId AND type = 'withdrawl';" +
                 "UPDATE compteInvestor " +
-                "SET solde = totalMontantTransactions " +
-                "WHERE id = NEW.compteInvestorId;" + //a changer les id
+                "SET solde = COALESCE(totalMontantDeposer, 0) - COALESCE(totalMontantRetirer, 0) " +
+                "WHERE id = NEW.compteInvestorId;" +
                 "RETURN NULL;" +
                 "END; " +
                 "$$ LANGUAGE plpgsql;";
         String dropTrigger = "DROP TRIGGER IF EXISTS triggerUpdateSolde ON transactions;";
         String createTriggerTransactions = "CREATE TRIGGER triggerUpdateSolde " +
-                "AFTER INSERT OR UPDATE ON Transactions " +
+                "AFTER INSERT OR UPDATE ON transactions " +
                 "FOR EACH ROW " +
                 "EXECUTE FUNCTION updateSolde();";
 
