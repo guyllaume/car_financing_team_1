@@ -1,5 +1,7 @@
 package view;
 
+import service.EventNotifierButton;
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
@@ -12,7 +14,7 @@ public class WithdrawlView extends JPanel {
     private JLabel solde;
     private JLabel montantARetirerLabel;
     private JTextField montantARetirer;
-    private JButton btnRetirer;
+    private EventNotifierButton btnRetirer;
     private JButton btnRetour;
     private GridBagConstraints gbc;
 
@@ -62,7 +64,7 @@ public class WithdrawlView extends JPanel {
         withdrawPanel.add(montantARetirer, gbc);
 
         //Button retirer le montant
-        btnRetirer = new JButton("Retirer");
+        btnRetirer = new EventNotifierButton("Retirer");
         btnRetirer.setPreferredSize(new Dimension(200, btnRetirer.getPreferredSize().height));
         buttonPanel.add(btnRetirer);
 
@@ -91,8 +93,14 @@ public class WithdrawlView extends JPanel {
     public void addRetourALaPageInvestorAccountListener(ActionListener listener) {
         btnRetour.addActionListener(listener);
     }
+    public void addRetirerListener(ActionListener listener, int priority) {
+        btnRetirer.addCustomActionListener(listener, priority);
+    }
 
     public void setsolde(String solde) {
         this.solde.setText(solde);
+    }
+    public String getMontantARetirer(){
+        return montantARetirer.getText();
     }
 }
