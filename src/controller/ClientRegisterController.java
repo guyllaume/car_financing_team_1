@@ -54,7 +54,7 @@ public class ClientRegisterController {
                         throw new RuntimeException("Entrer une durée(ans) valide");
                     }
                     clientDao = new ClientDAOImpl();
-                    if (clientDao.getClientByEmail(infoEntered.get(1).trim()) != null)
+                    if (clientDao.getUserByEmail(infoEntered.get(1).trim()) != null)
                         throw new RuntimeException("Ce compte existe deja");
                     client.setNomComplet(infoEntered.get(0).trim());
                     client.setEmail(infoEntered.get(1).trim());
