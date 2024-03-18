@@ -36,12 +36,12 @@ public class Investor extends User {
 
     public String toStringInvestorOnly() {
         String info = "";
-        info += "<br>Nom de Votre Banque : " + nomBanque
+        info += "<html>Nom de Votre Banque : " + nomBanque
                 + "<br>Votre numéro d'Institution bancaire : " + nbInstitution
                 + "<br>Votre numéro de transit : " + nbTransit
                 + "<br>Votre numéro de compte bancaire : " + nbCompte
                 + "<br>Votre niveau de risque : " + risque
-                + "<br>Votre niveau d'éducation comme investisseur : " + education;
+                + "<br>Votre niveau d'éducation comme investisseur : " + education+ "</html>";
         return info;
     }
 
