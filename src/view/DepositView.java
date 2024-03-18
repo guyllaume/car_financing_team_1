@@ -1,5 +1,7 @@
 package view;
 
+import service.EventNotifierButton;
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
@@ -20,7 +22,7 @@ public class DepositView extends JPanel{
     private JLabel numeroCompte;
     private JLabel montantAInvestirLabel;
     private JTextField montantAInvestir;
-    private JButton btnInvestir;
+    private EventNotifierButton btnInvestir;
     private JButton btnRetour;
     private GridBagConstraints gbc;
     public DepositView() {
@@ -120,7 +122,7 @@ public class DepositView extends JPanel{
         depositPanel.add(montantAInvestir, gbc);
 
         //Button Ajout du montant a Investir
-        btnInvestir = new JButton("Ajouter");
+        btnInvestir = new EventNotifierButton("Ajouter");
         btnInvestir.setPreferredSize(new Dimension(200, btnInvestir.getPreferredSize().height));
         buttonPanel.add(btnInvestir);
 
@@ -146,6 +148,9 @@ public class DepositView extends JPanel{
     public void addRetourALaPageInvestorAccountListener(ActionListener listener) {
         btnRetour.addActionListener(listener);
     }
+    public void addInvestirListener(ActionListener listener, int priority) {
+        btnInvestir.addCustomActionListener(listener, priority);
+    }
 
     public void setnomBanque(String nomBanque) {
         this.nomBanque.setText(nomBanque);
@@ -158,5 +163,8 @@ public class DepositView extends JPanel{
     }
     public void setNumeroCompte(String NumeroCompte) {
         this.numeroCompte.setText(NumeroCompte);
+    }
+    public String getMontantAInvestir(){
+        return montantAInvestir.getText();
     }
 }
