@@ -18,7 +18,8 @@ public class LoginToAccountController {
     private Investor investor;
     private InvestorDAOImpl investorDAO;
     private ClientDAOImpl clientDAO;
-    public LoginToAccountController(Client client, Investor investor, JPanel cardPanel, CardLayout cardLayout, LoginView lv){
+    private String accountTypeConnected;
+    public LoginToAccountController(Client client, Investor investor, LoginView lv){
         lv.addLoginListener(e -> {
             if (checkIfValidEmail(lv.getUsername())) {
                 if (lv.getSelectedAccountType().equals("Client")) {
@@ -40,7 +41,7 @@ public class LoginToAccountController {
                             client.setSalt(this.client.getSalt());
                             client.setTelephone(this.client.getTelephone());
                             lv.showErrorMessage("Login Succesfull!!");
-                            cardLayout.show(cardPanel, "Formulaire");
+                            accountTypeConnected = "client";
                         } else {
                             lv.showErrorMessage("The password doesn't match the one on the account");
                         }
@@ -66,7 +67,7 @@ public class LoginToAccountController {
                             investor.setSalt(this.investor.getSalt());
                             investor.setTelephone(this.investor.getTelephone());
                             lv.showErrorMessage("Login Succesfull!!");
-                            cardLayout.show(cardPanel, "Formulaire");
+                            accountTypeConnected = "investor";
                         } else {
                             lv.showErrorMessage("The password doesn't match the one on the account");
                         }
@@ -77,11 +78,14 @@ public class LoginToAccountController {
             }else{
                 lv.showErrorMessage("The email entered is not valid");
             }
-        });
+        }, 0);
 
     }
 
     private boolean checkIfValidEmail(String email){
         return email.contains("@") && (email.contains(".com") || email.contains(".ca"));
+    }
+    public String getAccountTypeConnected(){
+        return accountTypeConnected;
     }
 }
