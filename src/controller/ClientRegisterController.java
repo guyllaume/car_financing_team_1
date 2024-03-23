@@ -94,8 +94,14 @@ public class ClientRegisterController {
         }
         return isDigit && isSpecial && isUpperCase;
     }
+    public boolean testCheckIfPasswordRespectsCode(String password){
+        return checkIfPasswordRespectsCode(password);
+    }
     private boolean checkIfPasswordsAreEquals(String password, String confirmationPassword){
         return password.equals(confirmationPassword);
+    }
+    public boolean testCheckIfPasswordsAreEquals(String password, String confirmationPassword){
+        return checkIfPasswordsAreEquals(password, confirmationPassword);
     }
     private boolean checkIfInfoEnteredUser(List<String> registeredInfos){
         for (String registeredInfo : registeredInfos){
@@ -104,8 +110,14 @@ public class ClientRegisterController {
         }
         return true;
     }
+    public boolean testCheckIfInfoEnteredUser(List<String> registeredInfos){
+        return checkIfInfoEnteredUser(registeredInfos);
+    }
     private boolean checkIfValidEmail(String email){
         return email.contains("@") && (email.contains(".com") || email.contains(".ca"));
+    }
+    public boolean testCheckIfValidEmail(String email){
+        return checkIfValidEmail(email);
     }
     private boolean checkIfValidPhoneNumber(String phone){
         return changeTelephoneToNumbersOnly(phone).length() == 10;
